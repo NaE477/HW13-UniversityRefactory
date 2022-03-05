@@ -1,0 +1,28 @@
+package models.users;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import models.things.Grade;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.Set;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class Student extends User{
+    @OneToMany(mappedBy = "student")
+    private Set<Grade> grades;
+
+    @Override
+    public String toString() {
+        return "ID: " + getId() +
+                ", Full Name: " + getFirstname() + " " + getLastname() +
+                ", Username: " + getUsername();
+    }
+}

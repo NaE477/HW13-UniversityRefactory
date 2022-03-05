@@ -1,0 +1,75 @@
+package repos;
+
+import models.things.Course;
+import models.users.Professor;
+import org.hibernate.SessionFactory;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
+
+public class CourseRep extends BaseRepository<Course> {
+    public CourseRep(SessionFactory sessionFactory) {
+        super(sessionFactory);
+    }
+
+    public List<Course> readAll() {
+        try(var session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            var criteriaQuery = criteriaBuilder.createQuery(Course.class);
+            var root = criteriaQuery.from(Course.class);
+            var query = criteriaQuery.select(root);
+            return session.createQuery(query).list();
+        }
+    }
+
+    public List<Course> readAllByProfessor(Professor professor) {
+        try(var session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            var criteriaQuery = criteriaBuilder.createQuery(Course.class);
+            var root = criteriaQuery.from(Course.class);
+            var query = criteriaQuery
+                    .select(root)
+                    .where(criteriaBuilder.equal(root.get("professor_id"),professor.getId()));
+            return session.createQuery(query).list();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /*public HashMap<Course, Double> readAllByStudent(Student student) {
+        HashMap<Course, Double> courseWithGrade = new HashMap<>();
+        String readStmt = "SELECT c.*,p.*,grade FROM course_to_student " +
+                "INNER JOIN students s on s.student_id = course_to_student.student_id " +
+                "INNER JOIN courses c on c.course_id = course_to_student.course_id " +
+                "INNER JOIN professors p on p.prof_id = c.prof_id " +
+                " WHERE course_to_student.student_id = ?;";
+        try {
+            PreparedStatement ps = super.getConnection().prepareStatement(readStmt);
+            ps.setInt(1, student.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                courseWithGrade.put(
+                        new Course(
+                                rs.getInt("course_id"),
+                                rs.getInt("course_unit"),
+                                rs.getString("course_name"),
+                                new Professor(
+                                        rs.getInt("prof_id"),
+                                        rs.getString("prof_firstname"),
+                                        rs.getString("prof_lastname"),
+                                        rs.getString("prof_username"),
+                                        rs.getString("prof_password"),
+                                        ProfPosition.valueOf(rs.getString("prof_position"))
+                                ),
+                                rs.getInt("term")
+                        ),
+                        rs.getDouble("grade")
+                );
+            }
+            return courseWithGrade;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }*/
+}
