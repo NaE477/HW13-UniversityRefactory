@@ -2,7 +2,9 @@ package repos;
 
 import models.things.Term;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,15 +16,9 @@ public class TermRepository extends BaseRepository<Term> {
         super(sessionFactory);
     }
 
-    public Integer read(){
-        String readStmt = "SELECT term FROM term;";
-        try {
-            PreparedStatement ps = connection.prepareStatement(readStmt);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()) return rs.getInt("term");
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public Term read() {
+        try (var session = sessionFactory.openSession()) {
+            return session.createNamedQuery("getLastTerm", Term.class).getSingleResult();
         }
-        return null;
     }
 }

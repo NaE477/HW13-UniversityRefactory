@@ -1,9 +1,11 @@
 package repos;
 
 import models.things.Course;
+import models.users.Clerk;
 import models.users.Student;
 import org.hibernate.SessionFactory;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,53 +18,58 @@ public class StudentRep extends BaseRepository<Student> {
         super(sessionFactory);
     }
 
-    @Override
     public Student read(Integer id) {
-        String readStmt = "SELECT * FROM students WHERE student_id = ?;";
-        try {
-            PreparedStatement ps = super.getConnection().prepareStatement(readStmt);
-            ps.setInt(1, id);
-            return mapTo(ps.executeQuery());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try (var session = sessionFactory.openSession()) {
+            try {
+                return session.get(Student.class, id);
+            } catch (Exception e) {
+                return null;
+            }
         }
-        return null;
     }
 
     public Student read(String username) {
-        String readStmt = "SELECT * FROM students WHERE student_username = ?;";
-        try {
-            PreparedStatement ps = super.getConnection().prepareStatement(readStmt);
-            ps.setString(1, username);
-            return mapTo(ps.executeQuery());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try (var session = sessionFactory.openSession()) {
+            try {
+                CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+                var criteriaQuery = criteriaBuilder.createQuery(Student.class);
+                var root = criteriaQuery.from(Student.class);
+                var query = criteriaQuery
+                        .select(root)
+                        .where(criteriaBuilder.equal(root.get("username"),username));
+                return session.createQuery(query).getSingleResult();
+            } catch (Exception e) {
+                return null;
+            }
         }
-        return null;
     }
 
     public List<Student> readAll() {
-        String readStmt = "SELECT * FROM students;";
-        try {
-            PreparedStatement ps = super.getConnection().prepareStatement(readStmt);
-            return mapToList(ps.executeQuery());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try (var session = sessionFactory.openSession()) {
+            try {
+                CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+                var criteriaQuery = criteriaBuilder.createQuery(Student.class);
+                var root = criteriaQuery.from(Student.class);
+                var query = criteriaQuery
+                        .select(root);
+                return session.createQuery(query).list();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }
-        return null;
     }
 
     public List<Student> readAll(Course course){
-        String readStmt = "SELECT students.* FROM students " +
-                "INNER JOIN course_to_student cts on students.student_id = cts.student_id " +
-                "WHERE cts.course_id = ?;";
-        try {
-            PreparedStatement ps = super.getConnection().prepareStatement(readStmt);
-            ps.setInt(1,course.getId());
-            return mapToList(ps.executeQuery());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try (var session = sessionFactory.openSession()) {
+            try {
+                return session
+                        .createQuery("select s from Student s left join fetch Grade g on g.course = :courseId",Student.class)
+                        .setParameter("courseId",course.getId())
+                        .list();
+            } catch (Exception e) {
+                return null;
+            }
         }
-        return null;
     }
 }

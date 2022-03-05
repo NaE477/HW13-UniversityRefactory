@@ -14,7 +14,7 @@ public class TermService {
     public void endTerm(Term term){
         termRepository.update(term);
     }
-    public Integer getCurrentTerm(){
+    public Term getCurrentTerm(){
         return termRepository.read();
     }
 }

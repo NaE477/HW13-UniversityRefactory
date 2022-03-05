@@ -7,4 +7,5 @@ public class GradeRep extends BaseRepository<Grade> {
     public GradeRep(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
+
 }

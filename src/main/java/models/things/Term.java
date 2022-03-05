@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -15,6 +16,10 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@NamedQuery(
+        name = "getLastTerm",
+        query = "select max(term) from Term"
+)
 public class Term {
     @Id
     private Integer id;
