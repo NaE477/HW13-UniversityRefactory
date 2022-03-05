@@ -11,8 +11,10 @@ public class TermService {
     public TermService(SessionFactory sessionFactory){
         termRepository = new TermRepository(sessionFactory);
     }
-    public void endTerm(Term term){
-        termRepository.update(term);
+    public void endTerm(){
+        Term oldTerm = getCurrentTerm();
+        Term termToUpdate = new Term(0,oldTerm.getTerm() + 1,null);
+        termRepository.ins(termToUpdate);
     }
     public Term getCurrentTerm(){
         return termRepository.read();

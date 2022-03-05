@@ -1,9 +1,11 @@
 package controllers;
 
+import models.things.Course;
 import models.things.Term;
 import models.users.Clerk;
 import models.users.ProfPosition;
 import models.users.Professor;
+import models.users.Student;
 import org.hibernate.SessionFactory;
 import services.*;
 
@@ -20,12 +22,12 @@ public class ClerkController {
     private final Scanner sc = new Scanner(System.in);
 
     public ClerkController(SessionFactory sessionFactory, Clerk clerk) {
+        this.clerk = clerk;
         this.clerkService = new ClerkService(sessionFactory);
-        this.professorService = new ProfessorService(sessionFactory, professorRep);
-        this.studentService = new StudentService(sessionFactory, studentRep, courseService);
+        this.professorService = new ProfessorService(sessionFactory);
+        this.studentService = new StudentService(sessionFactory);
         this.courseService = new CourseService(sessionFactory);
         this.termService = new TermService(sessionFactory);
-        this.clerk = clerk;
         term = termService.getCurrentTerm();
     }
 
@@ -121,15 +123,15 @@ public class ClerkController {
         ArrayList<String> profInits = initialReceiver();
         ProfPosition profPosition = profPositionReceiver();
         Professor profToSign = new Professor(0, profInits.get(0), profInits.get(1), profInits.get(2), profInits.get(3), profPosition);
-        Integer newProfID = professorService.signUpProfessor(profToSign);
-        System.out.println("New Professor Created with ID: " + newProfID);
+        Professor newProf = professorService.signUpProfessor(profToSign);
+        System.out.println("New Professor Created with ID: " + newProf.getId());
     }
 
     private void addStudent() {
         ArrayList<String> studentInits = initialReceiver();
         Student studentToSign = new Student(0, studentInits.get(0), studentInits.get(1), studentInits.get(2), studentInits.get(3));
-        Integer newStudentId = studentService.signUpStudent(studentToSign);
-        System.out.println("New Student Created with ID: " + newStudentId);
+        Student newStudent = studentService.signUpStudent(studentToSign);
+        System.out.println("New Student Created with ID: " + newStudent.getId());
     }
 
     private void addCourse() {
@@ -144,9 +146,9 @@ public class ClerkController {
             Integer profID = Utilities.intReceiver();
             Professor professorToTeach = professorService.find(profID);
             if (professorToTeach != null) {
-                Course newCourse = new Course(0, units, courseName, professorToTeach,null,null);
-                Integer courseID = courseService.createNewCourse(newCourse);
-                System.out.println("New Course Created with ID: " + courseID);
+                Course newCourse = new Course(0, units, courseName, professorToTeach, null, null);
+                Course course = courseService.createNewCourse(newCourse);
+                System.out.println("New Course Created with ID: " + course.getId());
             } else System.out.println("Wrong ID");
         } else System.out.println("A Professor must be added first.");
     }
@@ -226,9 +228,7 @@ public class ClerkController {
                             System.out.println("Professor Position Changed.");
                             break;
                         case "0":
-                            Integer editID = professorService.editProfile(professor);
-                            if(editID != null) System.out.println("Edit performed");
-                            else System.out.println("Something went wrong with database.");
+                            professorService.editProfile(professor);
                             break label;
                         default:
                             System.out.println("Wrong Option");
@@ -321,9 +321,7 @@ public class ClerkController {
                             } else System.out.println("Wrong ID");
                             break;
                         case "0":
-                            Integer editID = courseService.editCourse(courseToEdit);
-                            if (editID != null) System.out.println("Course edited with ID: " + editID);
-                            else System.out.println("Something went wrong with the database");
+                            courseService.editCourse(courseToEdit);
                             break label;
                     }
                 }
@@ -337,10 +335,8 @@ public class ClerkController {
         System.out.println("Enter clerk ID to delete: ");
         Integer clerkToDeleteID = Utilities.intReceiver();
         Clerk clerkToDelete = clerkService.find(clerkToDeleteID);
-        if(clerkToDelete != null){
+        if (clerkToDelete != null) {
             clerkService.deleteClerk(clerkToDelete);
-            System.out.println("Clerk deleted.");
-             System.out.println("Something went wrong with database.");
         } else System.out.println("Wrong ID");
     }
 
@@ -350,10 +346,8 @@ public class ClerkController {
         System.out.println("Professor ID: ");
         Integer profToDeleteID = Utilities.intReceiver();
         Professor professorToDelete = professorService.find(profToDeleteID);
-        if(professorToDelete != null){
-            Integer deleteID = professorService.deleteProfessor(professorToDelete);
-            if (deleteID != null) System.out.println("Professor deleted successfully");
-             else System.out.println("Something went wrong with database");
+        if (professorToDelete != null) {
+            professorService.deleteProfessor(professorToDelete);
         } else System.out.println("Wrong ID");
     }
 
@@ -363,10 +357,8 @@ public class ClerkController {
         System.out.println("Student ID: ");
         Integer studentToDeleteID = Utilities.intReceiver();
         Student studentToDelete = studentService.find(studentToDeleteID);
-        if(studentToDelete != null){
-            Integer deleteID = studentService.delete(studentToDelete);
-            if(deleteID != null) System.out.println("Student deleted successfully");
-            else System.out.println("Something went wrong with database");
+        if (studentToDelete != null) {
+            studentService.delete(studentToDelete);
         } else System.out.println("Wrong ID");
     }
 
@@ -376,10 +368,8 @@ public class ClerkController {
         System.out.println("Course ID: ");
         Integer courseToDeleteID = Utilities.intReceiver();
         Course courseToDelete = courseService.find(courseToDeleteID);
-        if(courseToDelete != null){
-            Integer deleteID = courseService.deleteCourse(courseToDelete);
-            if(deleteID != null) System.out.println("Course deleted successfully");
-            else System.out.println("Something went wrong with database");
+        if (courseToDelete != null) {
+            courseService.deleteCourse(courseToDelete);
         } else System.out.println("Wrong ID");
     }
 
@@ -391,7 +381,7 @@ public class ClerkController {
         String username = Utilities.usernameReceiver();
         System.out.println("Password: ");
         String password = sc.nextLine();
-        return new ArrayList<>(Arrays.asList(firstname,lastname,username,password));
+        return new ArrayList<>(Arrays.asList(firstname, lastname, username, password));
     }
 
     private ProfPosition profPositionReceiver() {

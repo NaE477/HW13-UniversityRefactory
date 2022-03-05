@@ -1,7 +1,10 @@
 package repos;
 
 import models.things.Course;
+import models.things.Grade;
+import models.users.Clerk;
 import models.users.Professor;
+import models.users.Student;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,8 +15,18 @@ public class CourseRep extends BaseRepository<Course> {
         super(sessionFactory);
     }
 
+    public Course read(Integer id) {
+        try (var session = sessionFactory.openSession()) {
+            try {
+                return session.get(Course.class, id);
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
+
     public List<Course> readAll() {
-        try(var session = sessionFactory.openSession()) {
+        try (var session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             var criteriaQuery = criteriaBuilder.createQuery(Course.class);
             var root = criteriaQuery.from(Course.class);
@@ -23,21 +36,23 @@ public class CourseRep extends BaseRepository<Course> {
     }
 
     public List<Course> readAllByProfessor(Professor professor) {
-        try(var session = sessionFactory.openSession()) {
+        try (var session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             var criteriaQuery = criteriaBuilder.createQuery(Course.class);
             var root = criteriaQuery.from(Course.class);
             var query = criteriaQuery
                     .select(root)
-                    .where(criteriaBuilder.equal(root.get("professor_id"),professor.getId()));
+                    .where(criteriaBuilder.equal(root.get("professor_id"), professor.getId()));
             return session.createQuery(query).list();
         } catch (Exception e) {
             return null;
         }
     }
 
-    /*public HashMap<Course, Double> readAllByStudent(Student student) {
-        HashMap<Course, Double> courseWithGrade = new HashMap<>();
+
+
+
+        /*HashMap<Course, Double> courseWithGrade = new HashMap<>();
         String readStmt = "SELECT c.*,p.*,grade FROM course_to_student " +
                 "INNER JOIN students s on s.student_id = course_to_student.student_id " +
                 "INNER JOIN courses c on c.course_id = course_to_student.course_id " +
@@ -70,6 +85,5 @@ public class CourseRep extends BaseRepository<Course> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
-    }*/
+        return null;*/
 }

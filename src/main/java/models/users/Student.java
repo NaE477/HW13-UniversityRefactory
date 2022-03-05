@@ -19,6 +19,10 @@ public class Student extends User{
     @OneToMany(mappedBy = "student")
     private Set<Grade> grades;
 
+    public Student(Integer id,String firstname,String lastname,String username,String password){
+        super(id,firstname,lastname,username,password);
+    }
+
     @Override
     public String toString() {
         return "ID: " + getId() +

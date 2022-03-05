@@ -1,11 +1,14 @@
 package controllers;
 
+import models.things.Course;
+import models.things.Grade;
+import models.things.Term;
 import models.users.ProfPosition;
 import models.users.Professor;
-import services.CourseService;
-import services.ProfessorService;
-import services.StudentService;
-import services.TermService;
+import models.users.Student;
+import org.hibernate.SessionFactory;
+import repos.GradeRep;
+import services.*;
 
 import java.sql.Connection;
 import java.util.List;
@@ -17,15 +20,17 @@ public class ProfessorController {
     private final ProfessorService professorService;
     private final CourseService courseService;
     private final StudentService studentService;
+    private final GradeService gradeService;
     private final Professor professor;
-    private final Integer term;
+    private final Term term;
     private final Scanner sc = new Scanner(System.in);
 
-    public ProfessorController(Connection connection, Professor professor) {
-        professorService = new ProfessorService(connection, professorRep);
-        TermService termService = new TermService(connection);
-        courseService = new CourseService(connection);
-        studentService = new StudentService(connection, studentRep, courseService);
+    public ProfessorController(SessionFactory sessionFactory, Professor professor) {
+        professorService = new ProfessorService(sessionFactory);
+        TermService termService = new TermService(sessionFactory);
+        courseService = new CourseService(sessionFactory);
+        studentService = new StudentService(sessionFactory);
+        gradeService = new GradeService(sessionFactory);
         term = termService.getCurrentTerm();
         this.professor = professor;
     }
@@ -77,7 +82,9 @@ public class ProfessorController {
                 Integer studentID = Utilities.intReceiver();
                 Student student = studentService.find(studentID);
                 if (student != null && students.contains(student)) {
-                    if (courseService.findAllByStudent(student).get(course) == 0) {
+                    List<Grade> grades = gradeService.findAllByStudent(student);
+
+                    if () {
                         System.out.println("Enter Grade: ");
                         Double grade = gradeReceiver();
                         courseService.insertGradeForStudent(grade, course, student);

@@ -24,6 +24,7 @@ public abstract class BaseRepository<T> implements Repository<T>{
             try {
                 session.save(t);
                 transaction.commit();
+                System.out.println("Data Inserted.");
                 return t;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -41,6 +42,7 @@ public abstract class BaseRepository<T> implements Repository<T>{
             try {
                 session.update(t);
                 transaction.commit();
+                System.out.println("Edits saved.");
             } catch (Exception e) {
                 e.printStackTrace();
                 transaction.rollback();
@@ -57,6 +59,7 @@ public abstract class BaseRepository<T> implements Repository<T>{
             try {
                 session.delete(t);
                 transaction.commit();
+                System.out.println("Deleted.");
             } catch (Exception e) {
                 e.printStackTrace();
                 transaction.rollback();

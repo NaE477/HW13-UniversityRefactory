@@ -36,10 +36,6 @@ public class CourseService extends BaseService {
         return courseRep.readAllByProfessor(professor);
     }
 
-    /*public HashMap<Course, Double> findAllByStudent(Student student) {
-        return courseRep.readAllByStudent(student);
-    }*/
-
     public void pickCourse(Course course, Student student) {
         courseToStudentRep.ins(course, student);
     }

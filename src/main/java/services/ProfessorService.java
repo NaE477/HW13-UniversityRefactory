@@ -10,9 +10,9 @@ public class ProfessorService extends BaseService{
 
     private final ProfessorRep professorRep;
 
-    public ProfessorService(SessionFactory sessionFactory, ProfessorRep professorRep) {
+    public ProfessorService(SessionFactory sessionFactory) {
         super(sessionFactory);
-        this.professorRep = professorRep;
+        this.professorRep = new ProfessorRep(super.getSessionFactory());
     }
 
     public Professor signUpProfessor(Professor professor){
