@@ -1,15 +1,9 @@
 package repos;
 
 import models.users.Clerk;
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClerkRep extends BaseRepository<Clerk> {
@@ -47,6 +41,7 @@ public class ClerkRep extends BaseRepository<Clerk> {
         try (var session = sessionFactory.openSession()) {
             var transaction = session.beginTransaction();
             try {
+                /*return session.createQuery("select c from Clerk c",Clerk.class).list();*/
                 CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
                 var criteriaQuery = criteriaBuilder.createQuery(Clerk.class);
                 var root = criteriaQuery.from(Clerk.class);

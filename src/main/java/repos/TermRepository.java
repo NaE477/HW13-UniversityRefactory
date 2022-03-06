@@ -5,10 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
 public class TermRepository extends BaseRepository<Term> {
 
@@ -26,4 +23,19 @@ public class TermRepository extends BaseRepository<Term> {
             return session.createNamedQuery("getFirstTerm", Term.class).getSingleResult();
         }
     }
+    public List<Term> readAll() {
+        try (var session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            var criteriaQuery = criteriaBuilder.createQuery(Term.class);
+            var root = criteriaQuery.from(Term.class);
+            var query = criteriaQuery.select(root);
+            return session.createQuery(criteriaQuery).list();
+        }
+    }
+
+    @Override
+    public void update(Term term) {}
+
+    @Override
+    public void delete(Term term) {}
 }

@@ -28,7 +28,7 @@ public class StudentController {
         this.gradeService = new GradeService(sessionFactory);
         this.student = student;
         TermService termService = new TermService(sessionFactory);
-        this.term = termService.getCurrentTerm();
+        this.term = termService.findCurrentTerm();
     }
 
     public void entry() {

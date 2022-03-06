@@ -30,7 +30,7 @@ public class ProfessorController {
         courseService = new CourseService(sessionFactory);
         studentService = new StudentService(sessionFactory);
         gradeService = new GradeService(sessionFactory);
-        term = termService.getCurrentTerm();
+        term = termService.findCurrentTerm();
         this.professor = professor;
     }
 
@@ -127,7 +127,7 @@ public class ProfessorController {
 
     private Integer termReceiver() {
         while (true) {
-            Term firstTerm = termService.getFirstTerm();
+            Term firstTerm = termService.findFirstTerm();
             Integer term = Utilities.intReceiver();
             if (term <= this.term.getTerm() && term > 0) {
                 return term;
