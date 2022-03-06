@@ -13,12 +13,14 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Column(nullable = false)
-    private String firstname,lastname,password;
+    private String firstname,lastname;
     @Column(nullable = false,unique = true)
     private String username;
+    @Column(nullable = false)
+    private String password;
 
     @Override
     public boolean equals(Object o) {

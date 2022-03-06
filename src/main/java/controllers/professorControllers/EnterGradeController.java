@@ -1,4 +1,4 @@
-package controllers.professorController;
+package controllers.professorControllers;
 
 import controllers.Utilities;
 import models.things.Course;

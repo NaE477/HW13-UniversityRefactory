@@ -1,4 +1,4 @@
-package controllers.professorController;
+package controllers.professorControllers;
 
 import models.users.Professor;
 import org.hibernate.SessionFactory;

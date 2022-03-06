@@ -11,19 +11,22 @@ public class Utilities {
     static Scanner sc = new Scanner(System.in);
     private static final SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
     private static final ClerkService clerkService = new ClerkService(sessionFactory);
-    private static final ProfessorService professorService = new ProfessorService(sessionFactory, professorRep);
-    private static final StudentService studentService = new StudentService(sessionFactory, studentRep, courseService);
+    private static final ProfessorService professorService = new ProfessorService(sessionFactory);
+    private static final StudentService studentService = new StudentService(sessionFactory);
 
     public static String usernameReceiver() {
         while (true) {
             System.out.println("Username: ");
             String username = sc.nextLine();
-            if (clerkService.find(username) != null || professorService.find(username) != null || studentService.find(username) != null) {
-                System.out.println("This username Already Exists! Try another one: ");
-            } else {
-                return username;
-            }
+            if (usernameExists(username)) System.out.println("This username Already Exists! Try another one: ");
+            else return username;
         }
+    }
+
+    private static Boolean usernameExists(String username) {
+        return clerkService.find(username) != null
+                || professorService.find(username) != null
+                || studentService.find(username) != null;
     }
 
     public static Integer intReceiver() {

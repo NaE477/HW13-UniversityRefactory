@@ -1,8 +1,7 @@
-package controllers.professorController;
+package controllers.professorControllers;
 
 import models.users.Professor;
 import org.hibernate.SessionFactory;
-import services.*;
 
 import java.util.Scanner;
 
@@ -14,9 +13,9 @@ public class ProfessorController {
     private final Scanner sc = new Scanner(System.in);
 
     public ProfessorController(SessionFactory sessionFactory, Professor professor) {
-        enterGradeController = new EnterGradeController(sessionFactory,professor);
-        getSalaryController = new GetSalaryController(sessionFactory,professor);
-        changePasswordController = new ChangePasswordController(sessionFactory,professor);
+        enterGradeController = new EnterGradeController(sessionFactory, professor);
+        getSalaryController = new GetSalaryController(sessionFactory, professor);
+        changePasswordController = new ChangePasswordController(sessionFactory, professor);
         this.professor = professor;
     }
 

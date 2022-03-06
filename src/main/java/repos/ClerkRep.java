@@ -24,13 +24,10 @@ public class ClerkRep extends BaseRepository<Clerk> {
     public Clerk read(String username) {
         try (var session = sessionFactory.openSession()) {
             try {
-                CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-                var criteriaQuery = criteriaBuilder.createQuery(Clerk.class);
-                var root = criteriaQuery.from(Clerk.class);
-                var query = criteriaQuery
-                        .select(root)
-                        .where(criteriaBuilder.equal(root.get("username"),username));
-                return session.createQuery(query).getSingleResult();
+                return session
+                        .createQuery("from Clerk where username = :username",Clerk.class)
+                        .setParameter("username",username)
+                        .getSingleResult();
             } catch (Exception e) {
                 return null;
             }
