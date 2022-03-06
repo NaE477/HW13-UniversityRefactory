@@ -1,6 +1,7 @@
 package controllers;
 
 import controllers.clerkControllers.ClerkController;
+import controllers.professorController.ProfessorController;
 import models.users.Clerk;
 import models.users.Professor;
 import models.users.Student;

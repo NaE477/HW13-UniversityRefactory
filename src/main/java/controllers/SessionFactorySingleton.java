@@ -1,6 +1,6 @@
 package controllers;
 
-import models.things.Term;
+import models.things.*;
 import models.users.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -21,7 +21,9 @@ public class SessionFactorySingleton {
             //registry is useful for creating session factory
             INSTANCE = new MetadataSources(registry)
                     .addAnnotatedClass(Course.class)
+                    .addAnnotatedClass(Grade.class)
                     .addAnnotatedClass(Term.class)
+
                     .addAnnotatedClass(Clerk.class)
                     .addAnnotatedClass(Professor.class)
                     .addAnnotatedClass(ProfPosition.class)

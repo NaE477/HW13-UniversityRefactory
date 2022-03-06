@@ -1,35 +1,29 @@
 package controllers.clerkControllers;
 
 import controllers.Utilities;
-import models.things.Course;
 import models.things.Term;
 import models.users.Clerk;
-import models.users.ProfPosition;
-import models.users.Professor;
-import models.users.Student;
 import org.hibernate.SessionFactory;
 import services.*;
 
 import java.util.*;
 
 public class ClerkController {
+    private final Clerk clerk;
     private final TermService termService;
-
-    private final SignUpController signUpControllers;
+    private final SignUpController signUpController;
     private final EditController editController;
     private final DeleteController deleteController;
-
-    private final Clerk clerk;
+    private final EndTermController endTermController;
     private final Scanner sc = new Scanner(System.in);
 
     public ClerkController(SessionFactory sessionFactory, Clerk clerk) {
         this.clerk = clerk;
-
         termService = new TermService(sessionFactory);
-
-        signUpControllers = new SignUpController(sessionFactory);
+        signUpController = new SignUpController(sessionFactory);
         editController = new EditController(sessionFactory);
         deleteController = new DeleteController(sessionFactory);
+        endTermController = new EndTermController(sessionFactory);
     }
 
     public void entry() {
@@ -57,16 +51,16 @@ public class ClerkController {
 
             switch (opt) {
                 case "1":
-                    signUpControllers.addClerk();
+                    signUpController.addClerk();
                     break;
                 case "2":
-                    signUpControllers.addProfessor();
+                    signUpController.addProfessor();
                     break;
                 case "3":
-                    signUpControllers.addStudent();
+                    signUpController.addStudent();
                     break;
                 case "4":
-                    signUpControllers.addCourse();
+                    signUpController.addCourse();
                     break;
                 case "5":
                     editController.editClerk();
@@ -96,14 +90,7 @@ public class ClerkController {
                     System.out.println(clerk.getSalary());
                     break;
                 case "14":
-                    System.out.println("Sure?(Y/N)");
-                    String yOrN = sc.nextLine().toUpperCase(Locale.ROOT);
-                    if (yOrN.equals("Y")) {
-                        termService.endTerm();
-                        System.out.println("Term Ended successfully.");
-                    } else {
-                        System.out.println("Cancelled.");
-                    }
+                    endTermController.endTerm();
                     break;
                 case "0":
                     break label;
