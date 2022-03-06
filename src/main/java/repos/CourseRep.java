@@ -37,13 +37,10 @@ public class CourseRep extends BaseRepository<Course> {
 
     public List<Course> readAllByProfessor(Professor professor) {
         try (var session = sessionFactory.openSession()) {
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            var criteriaQuery = criteriaBuilder.createQuery(Course.class);
-            var root = criteriaQuery.from(Course.class);
-            var query = criteriaQuery
-                    .select(root)
-                    .where(criteriaBuilder.equal(root.get("professor_id"), professor.getId()));
-            return session.createQuery(query).list();
+            return session
+                    .createQuery("select c from Course c left join fetch c.professor where c.professor.id = :pId",Course.class)
+                    .setParameter("pId",professor.getId())
+                    .list();
         } catch (Exception e) {
             return null;
         }

@@ -83,9 +83,9 @@ class ClerkServiceTest {
         var clerk1 = new Clerk(0,"firstname1","lastname1","username1","password");
         var clerk2 = new Clerk(0,"firstname2","lastname2","username2","password");
         var clerk3 = new Clerk(0,"firstname3","lastname3","username3","password");
-        var clerkToSign1 = clerkService.signUpClerk(clerk1);
-        var clerkToSign2 = clerkService.signUpClerk(clerk2);
-        var clerkToSign3 = clerkService.signUpClerk(clerk3);
+        clerkService.signUpClerk(clerk1);
+        clerkService.signUpClerk(clerk2);
+        clerkService.signUpClerk(clerk3);
 
         //Act
         List<Clerk> clerks = clerkService.findAll();
