@@ -7,10 +7,8 @@ import models.users.ProfPosition;
 import models.users.Professor;
 import models.users.Student;
 import org.hibernate.SessionFactory;
-import repos.GradeRep;
 import services.*;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicReference;
@@ -21,13 +19,14 @@ public class ProfessorController {
     private final CourseService courseService;
     private final StudentService studentService;
     private final GradeService gradeService;
+    private final TermService termService;
     private final Professor professor;
     private final Term term;
     private final Scanner sc = new Scanner(System.in);
 
     public ProfessorController(SessionFactory sessionFactory, Professor professor) {
         professorService = new ProfessorService(sessionFactory);
-        TermService termService = new TermService(sessionFactory);
+        termService = new TermService(sessionFactory);
         courseService = new CourseService(sessionFactory);
         studentService = new StudentService(sessionFactory);
         gradeService = new GradeService(sessionFactory);
@@ -82,17 +81,17 @@ public class ProfessorController {
                 Integer studentID = Utilities.intReceiver();
                 Student student = studentService.find(studentID);
                 if (student != null && students.contains(student)) {
-                    List<Grade> grades = gradeService.findAllByStudent(student);
-
-                    if () {
+                    Grade grade = gradeService.find(student,course);
+                    if (grade.getGrade() == null) {
                         System.out.println("Enter Grade: ");
-                        Double grade = gradeReceiver();
-                        courseService.insertGradeForStudent(grade, course, student);
+                        Double gradeToSave = gradeReceiver();
+                        grade.setGrade(gradeToSave);
+                        gradeService.updateGrade(grade);
                         System.out.println("Grade inserted for student");
-                    } else System.out.println("Grade already inserted for student");
-                } else System.out.println("Wrong ID");
+                    } else System.out.println("Grade already inserted for student,try editing it.");
+                } else System.out.println("Wrong Student ID");
             } else System.out.println("No Students for this course yet");
-        } else System.out.println("Wrong ID");
+        } else System.out.println("Wrong Course ID");
     }
 
     private Long getSalary(Integer term) {
@@ -100,7 +99,7 @@ public class ProfessorController {
         List<Course> termCourses = professor
                 .getCourses()
                 .stream()
-                .filter(course -> course.getTerm().equals(term))
+                .filter(course -> course.getTerm().getTerm().equals(term))
                 .collect(Collectors.toList());
 
         termCourses
@@ -122,18 +121,17 @@ public class ProfessorController {
         String newPass = sc.nextLine();
         if (professor.getPassword().equals(oldPass)) {
             professor.setPassword(newPass);
-            Integer changePassID = professorService.editProfile(professor);
-            if (changePassID != null) System.out.println("Password changed successfully.");
-            else System.out.println("Something went wrong with database");
+            professorService.editProfile(professor);
         } else System.out.println("Old Password was Wrong.");
     }
 
     private Integer termReceiver() {
         while (true) {
+            Term firstTerm = termService.getFirstTerm();
             Integer term = Utilities.intReceiver();
-            if (term <= this.term && term > 0) {
+            if (term <= this.term.getTerm() && term > 0) {
                 return term;
-            } else System.out.println("Wrong term,Choose a term between: " + "1-" + this.term);
+            } else System.out.println("Wrong term,Choose a term between: " + firstTerm.getTerm() + "-" + this.term.getTerm());
         }
     }
 

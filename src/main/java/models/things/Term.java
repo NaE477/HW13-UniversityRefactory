@@ -17,9 +17,14 @@ import java.util.Set;
 @Setter
 @Entity
 @NamedQuery(
+        name = "getFirstTerm",
+        query = "select min(term) from Term"
+)
+@NamedQuery(
         name = "getLastTerm",
         query = "select max(term) from Term"
 )
+
 public class Term {
     @Id
     private Integer id;

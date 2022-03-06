@@ -1,6 +1,7 @@
 package models.users;
 
 import lombok.*;
+import models.things.Course;
 
 import javax.persistence.*;
 import java.util.Set;

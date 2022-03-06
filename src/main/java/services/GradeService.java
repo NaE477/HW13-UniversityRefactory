@@ -9,10 +9,26 @@ import repos.GradeRep;
 import java.util.List;
 
 public class GradeService extends BaseService{
-    private GradeRep gradeRep;
+    private final GradeRep gradeRep;
     public GradeService(SessionFactory sessionFactory) {
         super(sessionFactory);
         gradeRep = new GradeRep(super.getSessionFactory());
+    }
+
+    public Grade pickCourse(Grade grade) {
+        return gradeRep.ins(grade);
+    }
+
+    public void updateGrade(Grade grade) {
+        gradeRep.update(grade);
+    }
+
+    public void deleteGrade(Grade grade) {
+        gradeRep.delete(grade);
+    }
+
+    public Grade find(Student student,Course course){
+        return gradeRep.read(student,course);
     }
 
     public List<Grade> findAllByStudent(Student student) {

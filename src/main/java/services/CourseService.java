@@ -20,10 +20,6 @@ public class CourseService extends BaseService {
         return courseRep.ins(course);
     }
 
-    public void insertGradeForStudent(Double grade, Course course, Student student) {
-        courseToStudentRep.insGrade(grade,course,student);
-    }
-
     public Course find(Integer id) {
         return courseRep.read(id);
     }
@@ -36,9 +32,7 @@ public class CourseService extends BaseService {
         return courseRep.readAllByProfessor(professor);
     }
 
-    public void pickCourse(Course course, Student student) {
-        courseToStudentRep.ins(course, student);
-    }
+
 
     public void editCourse(Course course) {
         courseRep.update(course);

@@ -21,4 +21,9 @@ public class TermRepository extends BaseRepository<Term> {
             return session.createNamedQuery("getLastTerm", Term.class).getSingleResult();
         }
     }
+    public Term readFirst() {
+        try (var session = sessionFactory.openSession()) {
+            return session.createNamedQuery("getFirstTerm", Term.class).getSingleResult();
+        }
+    }
 }

@@ -19,4 +19,7 @@ public class TermService {
     public Term getCurrentTerm(){
         return termRepository.read();
     }
+    public Term getFirstTerm(){
+        return termRepository.readFirst();
+    }
 }
