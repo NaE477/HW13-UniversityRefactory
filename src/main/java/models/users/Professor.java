@@ -24,9 +24,9 @@ public class Professor extends User {
 
     @Override
     public String toString() {
-        return "ID: " + super.getId() +
+        return "\u001b[31m" + "ID: " + super.getId() +
                 " ,Full Name: " + super.getFirstname() + " " + super.getLastname() +
                 " ,Username: " + super.getUsername() +
-                " ,Position: " + profPosition.toString();
+                " ,Position: " + profPosition.toString() + "\u001b[0m";
     }
 }

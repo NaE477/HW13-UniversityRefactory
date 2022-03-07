@@ -46,16 +46,16 @@ public class Course {
     @Override
     public String toString() {
         if(professor != null)
-        return "ID: " + getId() +
+        return "\u001b[31m" + "ID: " + getId() +
                 ", Course Name: " + getCourseName() +
                 ", Professor: " + professor.getFirstname() + " " + professor.getLastname() +
                 ", Unit:" + getUnits() +
-                ", Term: " + getTerm().getTerm();
+                ", Term: " + getTerm().getTerm() + "\u001b[0m";
         else
-            return "ID: " + getId() +
+            return "\u001b[31m" + "ID: " + getId() +
                     ", Course Name: " + getCourseName() +
                     ", Professor: " + "No professor yet" +
                     ", Unit:" + getUnits() +
-                    ", Term: " + getTerm().getTerm();
+                    ", Term: " + getTerm().getTerm() + "\u001b[0m";
     }
 }

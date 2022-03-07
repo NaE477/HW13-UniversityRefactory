@@ -25,8 +25,8 @@ public class Student extends User{
 
     @Override
     public String toString() {
-        return "ID: " + getId() +
+        return "\u001b[31m" + "ID: " + getId() +
                 ", Full Name: " + getFirstname() + " " + getLastname() +
-                ", Username: " + getUsername();
+                ", Username: " + getUsername() + "\u001b[0m";
     }
 }
