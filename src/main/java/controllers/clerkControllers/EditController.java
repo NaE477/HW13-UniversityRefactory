@@ -13,6 +13,7 @@ import services.ProfessorService;
 import services.StudentService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class EditController {
@@ -34,7 +35,10 @@ public class EditController {
         clerks.forEach(System.out::println);
         Utilities.printGreen("Choose Clerk ID to edit: ");
         Integer clerkID = Utilities.intReceiver();
-        Clerk clerk = clerkService.find(clerkID);
+        Clerk clerk = clerks
+                .stream().filter(c -> Objects.equals(c.getId(),clerkID))
+                .findAny()
+                .orElse(null);
         if (clerk != null) {
             label:
             while (true) {
@@ -78,7 +82,10 @@ public class EditController {
             professors.forEach(System.out::println);
             Utilities.printGreen("Enter Professor ID to edit: ");
             Integer profToEditID = Utilities.intReceiver();
-            Professor professor = professorService.find(profToEditID);
+            Professor professor = professors
+                    .stream().filter(p -> Objects.equals(p.getId(),profToEditID))
+                    .findAny()
+                    .orElse(null);
             if (professor != null) {
                 label:
                 while (true) {
@@ -125,7 +132,10 @@ public class EditController {
             students.forEach(System.out::println);
             Utilities.printGreen("Enter Student ID to edit: ");
             Integer studentToEditID = Utilities.intReceiver();
-            Student student = studentService.find(studentToEditID);
+            Student student = students
+                    .stream().filter(s -> Objects.equals(s.getId(),studentToEditID))
+                    .findAny()
+                    .orElse(null);
             if (student != null) {
                 label:
                 while (true) {
@@ -165,7 +175,10 @@ public class EditController {
             courses.forEach(System.out::println);
             Utilities.printGreen("Enter Course ID to edit: ");
             Integer courseToEditId = Utilities.intReceiver();
-            Course courseToEdit = courseService.find(courseToEditId);
+            Course courseToEdit = courses
+                    .stream().filter(c -> Objects.equals(c.getId(),courseToEditId))
+                    .findAny()
+                    .orElse(null);
             if (courseToEdit != null) {
                 label:
                 while (true) {
@@ -192,7 +205,10 @@ public class EditController {
                             professors.forEach(System.out::println);
                             Utilities.printGreen("Enter professor ID to set for the course: ");
                             Integer profId = Utilities.intReceiver();
-                            Professor professor = professorService.find(profId);
+                            Professor professor = professors
+                                    .stream().filter(p -> Objects.equals(p.getId(),profId))
+                                    .findAny()
+                                    .orElse(null);
                             if (professor != null) {
                                 if (courseToEdit.getProfessor() != null) {
                                     if (!courseToEdit.getProfessor().equals(professor)) {

@@ -12,6 +12,7 @@ import services.ProfessorService;
 import services.StudentService;
 
 import java.util.List;
+import java.util.Objects;
 
 public class DeleteController {
     private final ClerkService clerkService;
@@ -31,7 +32,10 @@ public class DeleteController {
         clerks.forEach(System.out::println);
         Utilities.printGreen("Enter clerk ID to delete: ");
         Integer clerkToDeleteID = Utilities.intReceiver();
-        Clerk clerkToDelete = clerkService.find(clerkToDeleteID);
+        Clerk clerkToDelete = clerks
+                .stream().filter(clerk -> Objects.equals(clerk.getId(),clerkToDeleteID))
+                .findAny()
+                .orElse(null);
         if (clerkToDelete != null) {
             clerkService.deleteClerk(clerkToDelete);
         } else Utilities.printGreen("Wrong ID");
@@ -42,7 +46,11 @@ public class DeleteController {
         professors.forEach(System.out::println);
         Utilities.printGreen("Professor ID: ");
         Integer profToDeleteID = Utilities.intReceiver();
-        Professor professorToDelete = professorService.find(profToDeleteID);
+        Professor professorToDelete = professors
+                .stream()
+                .filter(professor -> Objects.equals(professor.getId(), profToDeleteID))
+                .findAny()
+                .orElse(null);
         if (professorToDelete != null) {
             professorService.deleteProfessor(professorToDelete);
         } else Utilities.printGreen("Wrong ID");
@@ -53,7 +61,11 @@ public class DeleteController {
         students.forEach(System.out::println);
         Utilities.printGreen("Student ID: ");
         Integer studentToDeleteID = Utilities.intReceiver();
-        Student studentToDelete = studentService.find(studentToDeleteID);
+        Student studentToDelete = students
+                .stream()
+                .filter(student -> Objects.equals(student.getId(),studentToDeleteID))
+                .findAny()
+                .orElse(null);
         if (studentToDelete != null) {
             studentService.delete(studentToDelete);
         } else Utilities.printGreen("Wrong ID");
@@ -64,7 +76,10 @@ public class DeleteController {
         courses.forEach(System.out::println);
         Utilities.printGreen("Course ID: ");
         Integer courseToDeleteID = Utilities.intReceiver();
-        Course courseToDelete = courseService.find(courseToDeleteID);
+        Course courseToDelete = courses
+                .stream().filter(course -> Objects.equals(course.getId(),courseToDeleteID))
+                .findAny()
+                .orElse(null);
         if (courseToDelete != null) {
             courseService.deleteCourse(courseToDelete);
         } else Utilities.printGreen("Wrong ID");

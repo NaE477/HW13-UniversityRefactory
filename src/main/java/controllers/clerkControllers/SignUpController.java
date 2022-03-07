@@ -58,7 +58,10 @@ public class SignUpController {
             professors.forEach(System.out::println);
             Utilities.printGreen("Enter professor ID for this Course: ");
             Integer profID = Utilities.intReceiver();
-            Professor professorToTeach = professorService.find(profID);
+            Professor professorToTeach = professors
+                    .stream().filter(p -> Objects.equals(p.getId(),profID))
+                    .findAny()
+                    .orElse(null);
             if (professorToTeach != null) {
                 Course newCourse = new Course(0, units, courseName, professorToTeach, termService.findCurrentTerm(), null);
                 Course course = courseService.createNewCourse(newCourse);
