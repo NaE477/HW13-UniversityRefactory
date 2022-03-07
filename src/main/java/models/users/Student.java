@@ -7,6 +7,7 @@ import lombok.Setter;
 import models.things.Grade;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class Student extends User{
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student",fetch = FetchType.EAGER)
     private Set<Grade> grades;
 
     public Student(Integer id,String firstname,String lastname,String username,String password){

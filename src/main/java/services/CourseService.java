@@ -1,6 +1,7 @@
 package services;
 
 import models.things.Course;
+import models.things.Term;
 import models.users.Professor;
 import models.users.Student;
 import org.hibernate.SessionFactory;
@@ -26,6 +27,10 @@ public class CourseService extends BaseService {
 
     public List<Course> findAll() {
         return courseRep.readAll();
+    }
+
+    public List<Course> findAll(Term term) {
+        return courseRep.readAll(term);
     }
 
     public List<Course> findAllByProfessor(Professor professor) {

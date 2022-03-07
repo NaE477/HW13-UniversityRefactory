@@ -1,6 +1,7 @@
 package repos;
 
 import models.things.Course;
+import models.things.Term;
 import models.users.Professor;
 import org.hibernate.SessionFactory;
 
@@ -29,6 +30,15 @@ public class CourseRep extends BaseRepository<Course> {
             var root = criteriaQuery.from(Course.class);
             var query = criteriaQuery.select(root);
             return session.createQuery(query).list();
+        }
+    }
+
+    public List<Course> readAll(Term term) {
+        try (var session = sessionFactory.openSession()){
+            var query = session
+                    .createQuery("from Course c where c.term.term = :term",Course.class)
+                    .setParameter("term",term.getTerm());
+            return query.list();
         }
     }
 

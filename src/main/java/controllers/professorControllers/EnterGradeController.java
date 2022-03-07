@@ -11,6 +11,7 @@ import services.GradeService;
 import services.StudentService;
 
 import java.util.List;
+import java.util.Objects;
 
 public class EnterGradeController {
     private final CourseService courseService;
@@ -30,15 +31,21 @@ public class EnterGradeController {
         courses.forEach(System.out::println);
         Utilities.printGreen("Enter Course ID: ");
         Integer courseID = Utilities.intReceiver();
-        Course course = courseService.find(courseID);
-        if (course != null && courses.contains(course)) {
+        Course course = courses
+                .stream().filter(c -> Objects.equals(c.getId(),courseID))
+                .findAny()
+                .orElse(null);
+        if (course != null) {
             List<Student> students = studentService.findAll(course);
             if (students.size() > 0) {
                 students.forEach(System.out::println);
                 Utilities.printGreen("Enter Student ID: ");
                 Integer studentID = Utilities.intReceiver();
-                Student student = studentService.find(studentID);
-                if (student != null && students.contains(student)) {
+                Student student = students
+                        .stream().filter(s -> Objects.equals(s.getId(),studentID))
+                        .findAny()
+                        .orElse(null);
+                if (student != null) {
                     Grade grade = gradeService.find(student,course);
                     if (grade.getGrade() == null) {
                         Utilities.printGreen("Enter Grade: ");
