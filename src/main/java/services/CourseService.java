@@ -32,7 +32,9 @@ public class CourseService extends BaseService {
         return courseRep.readAllByProfessor(professor);
     }
 
-
+    public void detachProfessor(Professor professor) {
+        courseRep.detachProfessor(professor);
+    }
 
     public void editCourse(Course course) {
         courseRep.update(course);

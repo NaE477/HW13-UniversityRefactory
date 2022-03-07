@@ -43,7 +43,14 @@ public class CourseRep extends BaseRepository<Course> {
         }
     }
 
-
+    public void detachProfessor(Professor professor) {
+        try (var session = sessionFactory.openSession()) {
+            session
+                    .createQuery("update Course c set c.professor = null where c.professor.id = :pId")
+                    .setParameter("pId",professor.getId())
+                    .executeUpdate();
+        }
+    }
 
 
         /*HashMap<Course, Double> courseWithGrade = new HashMap<>();
