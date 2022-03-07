@@ -12,12 +12,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CourseServiceTest {
-    static CourseService courseService;
-    static ProfessorService professorService;
-    static SessionFactory sessionFactory;
-    static TermService termService;
-    Term term;
-    Professor professor;
+    private static CourseService courseService;
+    private static ProfessorService professorService;
+    private static SessionFactory sessionFactory;
+    private static TermService termService;
+    private Term term;
+    private Professor professor;
 
     @BeforeAll
     static void initiate() {
@@ -68,9 +68,9 @@ class CourseServiceTest {
         Course course1 = new Course(0,3,"course1",professor,term,null);
         Course course2 = new Course(0,3,"course2",professor,term,null);
         Course course3 = new Course(0,3,"course3",professor,term,null);
-        Course courseToSave1 = courseService.createNewCourse(course1);
-        Course courseToSave2 = courseService.createNewCourse(course2);
-        Course courseToSave3 = courseService.createNewCourse(course3);
+        courseService.createNewCourse(course1);
+        courseService.createNewCourse(course2);
+        courseService.createNewCourse(course3);
         //Act
         List<Course> courses = courseService.findAll();
         //Assert
@@ -84,10 +84,10 @@ class CourseServiceTest {
         Course course2 = new Course(0,3,"course2",professor,term,null);
         Course course3 = new Course(0,3,"course3",professor,term,null);
         Course course4 = new Course(0,3,"course4",null,term,null);
-        Course courseToSave1 = courseService.createNewCourse(course1);
-        Course courseToSave2 = courseService.createNewCourse(course2);
-        Course courseToSave3 = courseService.createNewCourse(course3);
-        Course courseToSave4 = courseService.createNewCourse(course4);
+        courseService.createNewCourse(course1);
+        courseService.createNewCourse(course2);
+        courseService.createNewCourse(course3);
+        courseService.createNewCourse(course4);
         //Act
         List<Course> courses = courseService.findAllByProfessor(professor);
         //Assert

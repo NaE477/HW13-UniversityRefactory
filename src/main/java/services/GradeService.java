@@ -16,7 +16,10 @@ public class GradeService extends BaseService{
     }
 
     public Grade pickCourse(Grade grade) {
-        return gradeRep.ins(grade);
+        if(find(grade.getStudent(),grade.getCourse()) == null) {
+            grade.setGrade(null); //to control course won't be picked with a number
+            return gradeRep.ins(grade);
+        } else return null;
     }
 
     public void updateGrade(Grade grade) {

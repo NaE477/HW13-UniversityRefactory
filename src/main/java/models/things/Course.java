@@ -26,7 +26,7 @@ public class Course {
     @ManyToOne
     private Term term;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course",fetch = FetchType.EAGER)
     private Set<Grade> grades;
 
 

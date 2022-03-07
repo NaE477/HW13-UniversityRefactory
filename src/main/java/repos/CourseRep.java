@@ -1,10 +1,7 @@
 package repos;
 
 import models.things.Course;
-import models.things.Grade;
-import models.users.Clerk;
 import models.users.Professor;
-import models.users.Student;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.criteria.CriteriaBuilder;

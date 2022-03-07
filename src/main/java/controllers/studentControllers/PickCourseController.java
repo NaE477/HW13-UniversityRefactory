@@ -33,7 +33,10 @@ public class PickCourseController {
 
     public void pickCourse() {
         List<Course> courses = courseService.findAll();
-        List<Grade> pickedCoursesWithGrade = gradeService.findAllByStudent(student);
+        List<Grade> pickedCoursesWithGrade = gradeService.findAllByStudent(student)
+                .stream()
+                .filter(grade -> grade.getGrade() == null)
+                .collect(Collectors.toList());
         List<Course> pickedCourses = pickedCoursesWithGrade.stream().map(Grade::getCourse).collect(Collectors.toList());
 
         courses.forEach(System.out::println);
