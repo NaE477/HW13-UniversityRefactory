@@ -54,6 +54,6 @@ public class Utilities {
     }
 
     public static void printGreed(String input) {
-        System.out.println("         |" + "\u001b[32m" + input + "\u001b[0m");
+        System.out.println("         |" + "\u001b[32m" + input);
     }
 }

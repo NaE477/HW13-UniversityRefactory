@@ -15,7 +15,7 @@ public class SessionFactorySingleton {
 
         static {
             var registry = new StandardServiceRegistryBuilder()
-                    .configure() //goes and fetches configurations from hibernate-bank.cfg.xml
+                    .configure("hibernate.cfg.xml") //goes and fetches configurations from hibernate-bank.cfg.xml
                     .build();
 
             //registry is useful for creating session factory

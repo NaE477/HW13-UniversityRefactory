@@ -34,9 +34,9 @@ public class Entry {
     }
 
     private static void login() {
-        System.out.print("Username: ");
+        Utilities.printGreed("Username: ");
         String username = sc.nextLine();
-        System.out.print("Password: ");
+        Utilities.printGreed("Password: ");
         String password = sc.nextLine();
         User user = auth(username, password);
         if (user != null) {

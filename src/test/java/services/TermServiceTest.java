@@ -2,6 +2,7 @@ package services;
 
 import models.things.Term;
 import org.hibernate.SessionFactory;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -11,9 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TermServiceTest {
     private static TermService termService;
+    private static SessionFactory sessionFactory;
     @BeforeAll
     static void initiate() {
-        SessionFactory sessionFactory = SessionFactorySingletonTest.getInstance();
+        sessionFactory = SessionFactorySingletonTest.getInstance();
         termService = new TermService(sessionFactory);
     }
 
@@ -88,5 +90,15 @@ class TermServiceTest {
         //Assert
         assertNotNull(terms);
         assertEquals(3,terms.size());
+    }
+
+    @AfterEach
+    void cleanUp() {
+        var session = sessionFactory.openSession();
+        var transaction = session.beginTransaction();
+        session.createSQLQuery("truncate table term cascade ").executeUpdate();
+
+        transaction.commit();
+        session.close();
     }
 }
