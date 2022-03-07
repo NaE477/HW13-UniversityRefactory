@@ -2,15 +2,11 @@ package services;
 
 import models.users.Clerk;
 import org.hibernate.SessionFactory;
-import org.hibernate.exception.ConstraintViolationException;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import javax.persistence.PersistenceException;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,7 +31,6 @@ class ClerkServiceTest {
     void signUpClerk() {
         //Arrange
         Clerk clerk = new Clerk(0,"firstname","lastname","username","password");
-        var duplicateUsernameClerk = new Clerk(0,"firstname","lastname","username","password");
 
         //Act
         Clerk clerkToSign = clerkService.signUpClerk(clerk);

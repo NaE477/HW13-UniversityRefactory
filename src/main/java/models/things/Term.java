@@ -14,15 +14,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@NamedQuery(
-        name = "getFirstTerm",
-        query = "select min(term) from Term"
-)
-@NamedQuery(
-        name = "getLastTerm",
-        query = "select max(term) from Term"
-)
-
 public class Term {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,12 +15,12 @@ public class TermRepository extends BaseRepository<Term> {
 
     public Term read() {
         try (var session = sessionFactory.openSession()) {
-            return session.createNamedQuery("getLastTerm", Term.class).getSingleResult();
+            return session.createQuery("select t from Term t where t.term = (select max(term) from t)", Term.class).getSingleResult();
         }
     }
     public Term readFirst() {
         try (var session = sessionFactory.openSession()) {
-            return session.createNamedQuery("getFirstTerm", Term.class).getSingleResult();
+            return session.createQuery("select t from Term t where t.term = (select min(term) from t)", Term.class).getSingleResult();
         }
     }
     public List<Term> readAll() {
