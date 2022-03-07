@@ -64,7 +64,7 @@ public class StudentRep extends BaseRepository<Student> {
         try (var session = sessionFactory.openSession()) {
             try {
                 return session
-                        .createQuery("select s from Student s left join fetch Grade g on g.course = :courseId",Student.class)
+                        .createQuery("select s from Student s left join fetch s.grades g where g.course.id = :courseId",Student.class)
                         .setParameter("courseId",course.getId())
                         .list();
             } catch (Exception e) {

@@ -1,10 +1,8 @@
 package services;
 
-import models.users.Clerk;
 import models.users.ProfPosition;
 import models.users.Professor;
 import org.hibernate.SessionFactory;
-import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -84,9 +82,9 @@ class ProfessorServiceTest {
                 (0,"pFirstname","pLastname","pUsername2","pLastname", ProfPosition.C);
         var professor3 = new Professor
                 (0,"pFirstname","pLastname","pUsername3","pLastname", ProfPosition.C);
-        var toSign1 = professorService.signUpProfessor(professor1);
-        var toSign2 = professorService.signUpProfessor(professor2);
-        var toSign3 = professorService.signUpProfessor(professor3);
+        professorService.signUpProfessor(professor1);
+        professorService.signUpProfessor(professor2);
+        professorService.signUpProfessor(professor3);
         //Act
         List<Professor> professors = professorService.findAll();
         //Assert
@@ -102,7 +100,7 @@ class ProfessorServiceTest {
         var toAssertUsernameUniqueness = new Professor
                 (0,"pFirstname","pLastname","pUsername2","pLastname", ProfPosition.C);
         var toEdit = professorService.signUpProfessor(professor);
-        var toCheck = professorService.signUpProfessor(toAssertUsernameUniqueness);
+        professorService.signUpProfessor(toAssertUsernameUniqueness);
         //Act
         toEdit.setProfPosition(ProfPosition.NC);
         toEdit.setFirstname("edited");
