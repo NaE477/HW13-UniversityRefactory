@@ -12,9 +12,9 @@ public class ChangePasswordController {
     private final Professor professor;
     private final ProfessorService professorService;
 
-    public ChangePasswordController(SessionFactory sessionFactory,Professor professor) {
+    public ChangePasswordController(SessionFactory sessionFactory,Integer professorId) {
         professorService = new ProfessorService(sessionFactory);
-        this.professor = professor;
+        professor = professorService.find(professorId);
     }
 
     public void changePassword() {

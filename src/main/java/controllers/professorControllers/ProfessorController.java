@@ -17,9 +17,9 @@ public class ProfessorController {
     public ProfessorController(SessionFactory sessionFactory, Integer professorId) {
         ProfessorService professorService = new ProfessorService(sessionFactory);
         professor = professorService.find(professorId);
-        enterGradeController = new EnterGradeController(sessionFactory, professor);
-        getSalaryController = new GetSalaryController(sessionFactory, professor);
-        changePasswordController = new ChangePasswordController(sessionFactory, professor);
+        enterGradeController = new EnterGradeController(sessionFactory, professorId);
+        getSalaryController = new GetSalaryController(sessionFactory, professorId);
+        changePasswordController = new ChangePasswordController(sessionFactory, professorId);
     }
 
     public void entry() {

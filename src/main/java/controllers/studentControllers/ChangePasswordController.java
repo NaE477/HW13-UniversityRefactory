@@ -12,9 +12,9 @@ public class ChangePasswordController {
     private final StudentService studentService;
     private final Student student;
 
-    public ChangePasswordController(SessionFactory sessionFactory,Student student) {
+    public ChangePasswordController(SessionFactory sessionFactory,Integer studentId) {
         studentService = new StudentService(sessionFactory);
-        this.student = student;
+        student = studentService.find(studentId);
     }
     public void changePassword() {
         Utilities.printGreen("Old Password: ");

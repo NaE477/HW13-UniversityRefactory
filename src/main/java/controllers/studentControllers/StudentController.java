@@ -17,9 +17,9 @@ public class StudentController {
     public StudentController(SessionFactory sessionFactory, Integer studentId) {
         StudentService studentService = new StudentService(sessionFactory);
         student = studentService.find(studentId);
-        pickCourseController = new PickCourseController(sessionFactory, student);
-        changePasswordController = new ChangePasswordController(sessionFactory,student);
-        viewCoursesController = new ViewCoursesController(sessionFactory,student);
+        pickCourseController = new PickCourseController(sessionFactory, studentId);
+        changePasswordController = new ChangePasswordController(sessionFactory,studentId);
+        viewCoursesController = new ViewCoursesController(sessionFactory,studentId);
     }
 
     public void entry() {

@@ -6,6 +6,7 @@ import models.things.Term;
 import models.users.ProfPosition;
 import models.users.Professor;
 import org.hibernate.SessionFactory;
+import services.ProfessorService;
 import services.TermService;
 
 import java.util.List;
@@ -16,13 +17,15 @@ public class GetSalaryController {
     private final Professor professor;
     private final TermService termService;
     private final Term term;
-    public GetSalaryController(SessionFactory sessionFactory, Professor professor) {
-        this.professor = professor;
+    public GetSalaryController(SessionFactory sessionFactory, Integer professorId) {
+        ProfessorService professorService = new ProfessorService(sessionFactory);
+        professor = professorService.find(professorId);
         termService = new TermService(sessionFactory);
         term = termService.findCurrentTerm();
     }
 
     public void initiation() {
+        termService.findAll().forEach(t -> Utilities.printGreen(t.getTerm().toString()));
         Utilities.printGreen("Which Term: ");
         Integer term = termReceiver();
         Utilities.printGreen(getSalary(term).toString());

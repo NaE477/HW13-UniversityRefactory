@@ -8,6 +8,7 @@ import models.users.Student;
 import org.hibernate.SessionFactory;
 import services.CourseService;
 import services.GradeService;
+import services.StudentService;
 import services.TermService;
 
 import java.util.List;
@@ -21,13 +22,14 @@ public class PickCourseController {
     private final Term term;
     private final Student student;
 
-    public PickCourseController(SessionFactory sessionFactory, Student student) {
+    public PickCourseController(SessionFactory sessionFactory, Integer studentId) {
         courseService = new CourseService(sessionFactory);
         gradeService = new GradeService(sessionFactory);
-        TermService termService = new TermService(sessionFactory);
         gradeUtils = new GradeUtils(sessionFactory);
+        TermService termService = new TermService(sessionFactory);
         term = termService.findCurrentTerm();
-        this.student = student;
+        StudentService studentService = new StudentService(sessionFactory);
+        student = studentService.find(studentId);
     }
 
 

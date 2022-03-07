@@ -8,6 +8,7 @@ import models.users.Student;
 import org.hibernate.SessionFactory;
 import services.CourseService;
 import services.GradeService;
+import services.ProfessorService;
 import services.StudentService;
 
 import java.util.List;
@@ -19,11 +20,12 @@ public class EnterGradeController {
     private final GradeService gradeService;
     private final Professor professor;
 
-    public EnterGradeController(SessionFactory sessionFactory,Professor professor) {
+    public EnterGradeController(SessionFactory sessionFactory,Integer professorId) {
         courseService = new CourseService(sessionFactory);
         studentService = new StudentService(sessionFactory);
         gradeService = new GradeService(sessionFactory);
-        this.professor = professor;
+        ProfessorService professorService = new ProfessorService(sessionFactory);
+        professor = professorService.find(professorId);
     }
 
     public void enterGrade() {
