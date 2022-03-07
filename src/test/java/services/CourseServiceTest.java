@@ -96,6 +96,23 @@ class CourseServiceTest {
     }
 
     @Test
+    void detachProfessor() {
+        //Arrange
+        Course course1 = new Course(0,3,"course1",professor,term,null);
+        Course course2 = new Course(0,3,"course2",professor,term,null);
+        Course course3 = new Course(0,3,"course3",professor,term,null);
+        Course course4 = new Course(0,3,"course4",null,term,null);
+        courseService.createNewCourse(course1);
+        courseService.createNewCourse(course2);
+        courseService.createNewCourse(course3);
+        courseService.createNewCourse(course4);
+        //Act
+        courseService.detachProfessor(professor);
+        //Assert
+        assertEquals(0,courseService.findAllByProfessor(professor).size());
+    }
+
+    @Test
     void editCourse() {
         //Arrange
         Course course = new Course(0,3,"course",professor,term,null);

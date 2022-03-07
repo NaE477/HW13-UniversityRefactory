@@ -45,10 +45,17 @@ public class Course {
 
     @Override
     public String toString() {
+        if(professor != null)
         return "ID: " + getId() +
                 ", Course Name: " + getCourseName() +
-                ", Professor: " + getProfessor().getFirstname() + " " + getProfessor().getLastname() +
+                ", Professor: " + professor.getFirstname() + " " + professor.getLastname() +
                 ", Unit:" + getUnits() +
-                ", Term: " + getTerm();
+                ", Term: " + getTerm().getTerm();
+        else
+            return "ID: " + getId() +
+                    ", Course Name: " + getCourseName() +
+                    ", Professor: " + "No professor yet" +
+                    ", Unit:" + getUnits() +
+                    ", Term: " + getTerm().getTerm();
     }
 }

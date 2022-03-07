@@ -4,10 +4,7 @@ import controllers.Utilities;
 import models.things.Course;
 import models.users.*;
 import org.hibernate.SessionFactory;
-import services.ClerkService;
-import services.CourseService;
-import services.ProfessorService;
-import services.StudentService;
+import services.*;
 
 import java.util.*;
 
@@ -17,12 +14,14 @@ public class SignUpController {
     private final ProfessorService professorService;
     private final StudentService studentService;
     private final CourseService courseService;
+    private final TermService termService;
 
     public SignUpController(SessionFactory sessionFactory) {
         clerkService = new ClerkService(sessionFactory);
         professorService = new ProfessorService(sessionFactory);
         studentService = new StudentService(sessionFactory);
         courseService = new CourseService(sessionFactory);
+        termService = new TermService(sessionFactory);
     }
 
 
@@ -61,7 +60,7 @@ public class SignUpController {
             Integer profID = Utilities.intReceiver();
             Professor professorToTeach = professorService.find(profID);
             if (professorToTeach != null) {
-                Course newCourse = new Course(0, units, courseName, professorToTeach, null, null);
+                Course newCourse = new Course(0, units, courseName, professorToTeach, termService.findCurrentTerm(), null);
                 Course course = courseService.createNewCourse(newCourse);
                 Utilities.printGreen("New Course Created with ID: " + course.getId());
             } else Utilities.printGreen("Wrong ID");

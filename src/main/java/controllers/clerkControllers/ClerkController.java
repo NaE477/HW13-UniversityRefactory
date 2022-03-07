@@ -87,7 +87,7 @@ public class ClerkController {
                     deleteController.deleteCourse();
                     break;
                 case "13":
-                    Utilities.printGreen(clerk.getSalary().toString());
+                    Utilities.printGreen("Pay Check: " + clerk.getSalary().toString());
                     break;
                 case "14":
                     endTermController.endTerm();

@@ -45,10 +45,13 @@ public class CourseRep extends BaseRepository<Course> {
 
     public void detachProfessor(Professor professor) {
         try (var session = sessionFactory.openSession()) {
+            var transaction = session.beginTransaction();
             session
                     .createQuery("update Course c set c.professor = null where c.professor.id = :pId")
                     .setParameter("pId",professor.getId())
                     .executeUpdate();
+            transaction.commit();
+            session.close();
         }
     }
 
