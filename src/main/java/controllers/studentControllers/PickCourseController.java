@@ -34,35 +34,37 @@ public class PickCourseController {
 
 
     public void pickCourse() {
-        List<Course> courses = courseService.findAll(term);
-        List<Grade> pickedCoursesWithGrade = gradeService.findAllByStudent(student)
-                .stream()
-                .filter(grade -> grade.getGrade() == null)
-                .collect(Collectors.toList());
+        List<Course> allCourses = courseService.findAll(term);
 
-        List<Course> finishedCourses = pickedCoursesWithGrade
+        List<Grade> reportCard = gradeService.findAllByStudent(student);
+
+        List<Course> pickedCourses = reportCard
                 .stream()
                 .map(Grade::getCourse)
                 .collect(Collectors.toList());
 
-        courses.forEach(System.out::println);
+        allCourses.forEach(System.out::println);
         Utilities.printGreen("Enter Course ID you want to pick:");
         Integer courseToPickId = Utilities.intReceiver();
-        Course courseToPick = courses
-                .stream().filter(c -> Objects.equals(c.getId(), courseToPickId))
+
+        Course courseToPick = allCourses
+                .stream()
+                .filter(c -> Objects.equals(c.getId(), courseToPickId))
                 .findAny()
                 .orElse(null);
+
         if (courseToPick != null) {
-            if (!finishedCourses.contains(courseToPick)) {
-                if (canPick(courseToPick)) {
+            if (!pickedCourses.contains(courseToPick)) {
+                if (canPickByThreshold(courseToPick)) {
                     Grade grade = gradeService.pickCourse(new Grade(0, student, courseToPick, null));
-                    Utilities.printGreen(grade.getCourse().getCourseName() + " picked successfully");
+                    if (grade != null) Utilities.printGreen(grade.getCourse().getCourseName() + " picked successfully");
+                    else Utilities.printGreen("Something went wrong with database.");
                 } else Utilities.printGreen("You Can't Pick this course.Your unit threshold is filled.");
-            } else Utilities.printGreen("Already Picked");
+            } else Utilities.printGreen("Course Already Picked");
         } else Utilities.printGreen("Wrong ID");
     }
 
-    private Boolean canPick(Course courseToPick) {
+    private Boolean canPickByThreshold(Course courseToPick) {
         Set<Grade> finishedCoursesLastTerm = finishedCourses(student);
 
         Set<Grade> unfinishedCoursesThisTerm = unfinishedCourses(student);
@@ -73,17 +75,22 @@ public class PickCourseController {
 
         Integer unitsPassed = unitsPassed(finishedCoursesLastTerm);
 
-        if (finishedCoursesLastTerm.size() > 0) {
-            if (unfinishedCoursesThisTerm.size() > 0 && gradeSum > 0) {
-                double averageGrade = gradeSum / unitsPassed;
+        double averageGrade;
+        try {
+            averageGrade = gradeSum / unitsPassed;
+        } catch (ArithmeticException e) {
+            averageGrade = 0.0;
+        }
+        int pickingThreshold;
 
-                int pickingThreshold;
-                if (averageGrade > 18) pickingThreshold = 24;
-                else pickingThreshold = 20;
+        int unitToBePicked = unitsPicked + courseToPick.getUnits();
 
-                return unitsPicked + courseToPick.getUnits() < pickingThreshold;
-            } else return true;
-        } else return false;
+        if (finishedCoursesLastTerm.size() == 0) pickingThreshold = 20;
+        else if (averageGrade > 18) pickingThreshold = 24;
+        else if (averageGrade != 0 && averageGrade < 14) pickingThreshold = 12;
+        else pickingThreshold = 20;
+
+        return unitToBePicked <= pickingThreshold;
     }
 
     private Set<Grade> finishedCourses(Student student) {
