@@ -1,19 +1,10 @@
 package controllers.studentControllers;
 
 import controllers.Utilities;
-import models.things.Course;
-import models.things.Grade;
-import models.things.Term;
 import models.users.Student;
 import org.hibernate.SessionFactory;
-import services.CourseService;
-import services.GradeService;
-import services.StudentService;
-import services.TermService;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 public class StudentController {
     private final Scanner sc = new Scanner(System.in);
@@ -30,21 +21,21 @@ public class StudentController {
     }
 
     public void entry() {
-        System.out.println("Welcome to Student Section," + student.getFirstname() + " " + student.getLastname() + "\nChoose an option:");
+        Utilities.printGreed("Welcome to Student Section," + student.getFirstname() + " " + student.getLastname() + "\nChoose an option:");
         label:
         while (true) {
-            System.out.println("1-View Profile");
-            System.out.println("2-View Presented Courses");
-            System.out.println("3-Pick Courses");
-            System.out.println("4-View Picked Courses");
-            System.out.println("5-Change Password");
-            System.out.println("0-Exit");
-            System.out.println("Option: ");
+            Utilities.printGreed("1-View Profile");
+            Utilities.printGreed("2-View Presented Courses");
+            Utilities.printGreed("3-Pick Courses");
+            Utilities.printGreed("4-View Picked Courses");
+            Utilities.printGreed("5-Change Password");
+            Utilities.printGreed("0-Exit");
+            Utilities.printGreed("Option: ");
             String opt = sc.nextLine();
 
             switch (opt) {
                 case "1":
-                    System.out.println(student);
+                    Utilities.printGreed(String.valueOf(student));
                     break;
                 case "2":
                     viewCoursesController.viewCourses();
@@ -60,7 +51,7 @@ public class StudentController {
                 case "0":
                     break label;
                 default:
-                    System.out.println("Wrong Option.");
+                    Utilities.printGreed("Wrong Option.");
                     break;
             }
         }

@@ -1,5 +1,6 @@
 package controllers.studentControllers;
 
+import controllers.Utilities;
 import models.things.Course;
 import models.things.Grade;
 import models.things.Term;
@@ -37,8 +38,8 @@ public class ViewCoursesController {
         List<Grade> grades = gradeService.findAllByStudent(student);
         grades.forEach((grade) -> {
             if (grade.getGrade() != 0) {
-                System.out.println(grade.getCourse() + "\nGrade: " + grade);
-            } else System.out.println(grade.getCourse() + "\nProfessor haven't entered a grade for this course yet.");
+                Utilities.printGreed(grade.getCourse() + "\nGrade: " + grade);
+            } else Utilities.printGreed(grade.getCourse() + "\nProfessor haven't entered a grade for this course yet.");
         });
     }
 }

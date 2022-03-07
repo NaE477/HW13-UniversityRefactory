@@ -22,9 +22,9 @@ public class Entry {
     public static void main(String[] args) {
         initiateAdmin();
 
-        System.out.println("Welcome to University App.\n");
+        Utilities.printGreed("Welcome to University App.\n");
         while (true) {
-            System.out.println("Enter L/l to login or E/e to exit:");
+            Utilities.printGreed("Enter L/l to login or E/e to exit:");
             String opt = sc.nextLine().toUpperCase(Locale.ROOT);
 
             if (opt.equals("L")) login();
@@ -50,7 +50,7 @@ public class Entry {
                 StudentController studentController = new StudentController(sessionFactory, (Student) user);
                 studentController.entry();
             }
-        } else System.out.println("Wrong Username/Password.");
+        } else Utilities.printGreed("Wrong Username/Password.");
     }
 
     private static User auth(String username, String password) {
@@ -73,7 +73,7 @@ public class Entry {
         ClerkService clerkService = new ClerkService(sessionFactory);
         if(clerkService.findAll().size() == 0) {
             clerkService.signUpClerk(new Clerk(0,"admin","admin","admin","admin"));
-            System.out.println("Admin user initiated due to first time login.");
+            Utilities.printGreed("Admin user initiated due to first time login.");
         }
     }
 }

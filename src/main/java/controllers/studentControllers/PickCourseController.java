@@ -40,17 +40,17 @@ public class PickCourseController {
         List<Course> pickedCourses = pickedCoursesWithGrade.stream().map(Grade::getCourse).collect(Collectors.toList());
 
         courses.forEach(System.out::println);
-        System.out.println("Enter Course ID you want to pick:");
+        Utilities.printGreed("Enter Course ID you want to pick:");
         Integer courseToPickId = Utilities.intReceiver();
         Course courseToPick = courseService.find(courseToPickId);
         if (courseToPick != null) {
             if (!pickedCourses.contains(courseToPick)) {
                 if (canPick(courseToPick)) {
                     Grade grade = gradeService.pickCourse(new Grade(0,student,courseToPick,null));
-                    System.out.println(grade.getCourse().getCourseName() + " picked successfully");
-                } else System.out.println("You Can't Pick this course.Your unit threshold is filled.");
-            } else System.out.println("Already Picked");
-        } else System.out.println("Wrong ID");
+                    Utilities.printGreed(grade.getCourse().getCourseName() + " picked successfully");
+                } else Utilities.printGreed("You Can't Pick this course.Your unit threshold is filled.");
+            } else Utilities.printGreed("Already Picked");
+        } else Utilities.printGreed("Wrong ID");
     }
 
     private Boolean canPick(Course courseToPick) {

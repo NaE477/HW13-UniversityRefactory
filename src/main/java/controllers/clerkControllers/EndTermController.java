@@ -1,5 +1,6 @@
 package controllers.clerkControllers;
 
+import controllers.Utilities;
 import org.hibernate.SessionFactory;
 import services.TermService;
 
@@ -15,13 +16,13 @@ public class EndTermController {
     }
 
     public void endTerm() {
-        System.out.println("Sure?(Y/N)");
+        Utilities.printGreed("Sure?(Y/N)");
         String yOrN = sc.nextLine().toUpperCase(Locale.ROOT);
         if (yOrN.equals("Y")) {
             termService.endTerm();
-            System.out.println("Term Ended successfully.");
+            Utilities.printGreed("Term Ended successfully.");
         } else {
-            System.out.println("Cancelled.");
+            Utilities.printGreed("Cancelled.");
         }
     }
 }

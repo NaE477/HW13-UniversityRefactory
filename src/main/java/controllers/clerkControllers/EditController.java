@@ -32,67 +32,67 @@ public class EditController {
     public void editClerk() {
         List<Clerk> clerks = clerkService.findAll();
         clerks.forEach(System.out::println);
-        System.out.println("Choose Clerk ID to edit: ");
+        Utilities.printGreed("Choose Clerk ID to edit: ");
         Integer clerkID = Utilities.intReceiver();
         Clerk clerk = clerkService.find(clerkID);
         if (clerk != null) {
             label:
             while (true) {
-                System.out.println("1-Change username");
-                System.out.println("2-Change firstname/lastname");
-                System.out.println("0-Finish Editing");
+                Utilities.printGreed("1-Change username");
+                Utilities.printGreed("2-Change firstname/lastname");
+                Utilities.printGreed("0-Finish Editing");
                 String opt = sc.nextLine();
                 switch (opt) {
                     case "1":
-                        System.out.println("New Username: ");
+                        Utilities.printGreed("New Username: ");
                         String newUsername = Utilities.usernameReceiver();
                         clerk.setUsername(newUsername);
                         break;
                     case "2":
-                        System.out.println("New Firstname: ");
+                        Utilities.printGreed("New Firstname: ");
                         String newFirstName = sc.nextLine();
-                        System.out.println("New Lastname: ");
+                        Utilities.printGreed("New Lastname: ");
                         String newLastName = sc.nextLine();
                         clerk.setFirstname(newFirstName);
                         clerk.setLastname(newLastName);
                         break;
                     case "0":
                         clerkService.editProfile(clerk);
-                        System.out.println("Clerk updated");
+                        Utilities.printGreed("Clerk updated");
                         break label;
                     default:
-                        System.out.println("Wrong Option");
+                        Utilities.printGreed("Wrong Option");
                 }
             }
-        } else System.out.println("Wrong ID");
+        } else Utilities.printGreed("Wrong ID");
     }
 
     public void editProfessor() {
         List<Professor> professors = professorService.findAll();
         if (professors.size() > 0) {
             professors.forEach(System.out::println);
-            System.out.println("Enter Professor ID to edit: ");
+            Utilities.printGreed("Enter Professor ID to edit: ");
             Integer profToEditID = Utilities.intReceiver();
             Professor professor = professorService.find(profToEditID);
             if (professor != null) {
                 label:
                 while (true) {
-                    System.out.println("1-Change Username");
-                    System.out.println("2-Change Full Name");
-                    System.out.println("3-Change Committee Status");
-                    System.out.println("0-Finish Editing");
+                    Utilities.printGreed("1-Change Username");
+                    Utilities.printGreed("2-Change Full Name");
+                    Utilities.printGreed("3-Change Committee Status");
+                    Utilities.printGreed("0-Finish Editing");
                     System.out.print("Option: ");
                     String opt = sc.nextLine();
                     switch (opt) {
                         case "1":
-                            System.out.println("New Username: ");
+                            Utilities.printGreed("New Username: ");
                             String newUsername = Utilities.usernameReceiver();
                             professor.setUsername(newUsername);
                             break;
                         case "2":
-                            System.out.println("New Firstname: ");
+                            Utilities.printGreed("New Firstname: ");
                             String newFirstName = sc.nextLine();
-                            System.out.println("New Lastname: ");
+                            Utilities.printGreed("New Lastname: ");
                             String newLastName = sc.nextLine();
                             professor.setFirstname(newFirstName);
                             professor.setLastname(newLastName);
@@ -101,45 +101,45 @@ public class EditController {
                             if (professor.getProfPosition().equals(ProfPosition.C)) {
                                 professor.setProfPosition(ProfPosition.NC);
                             } else professor.setProfPosition(ProfPosition.C);
-                            System.out.println("Professor Position Changed.");
+                            Utilities.printGreed("Professor Position Changed.");
                             break;
                         case "0":
                             professorService.editProfile(professor);
                             break label;
                         default:
-                            System.out.println("Wrong Option");
+                            Utilities.printGreed("Wrong Option");
                             break;
                     }
                 }
-            } else System.out.println("Wrong ID");
-        } else System.out.println("No Professors Added yet.");
+            } else Utilities.printGreed("Wrong ID");
+        } else Utilities.printGreed("No Professors Added yet.");
     }
 
     public void editStudent() {
         List<Student> students = studentService.findAll();
         if (students.size() > 0) {
             students.forEach(System.out::println);
-            System.out.println("Enter Student ID to edit: ");
+            Utilities.printGreed("Enter Student ID to edit: ");
             Integer studentToEditID = Utilities.intReceiver();
             Student student = studentService.find(studentToEditID);
             if (student != null) {
                 label:
                 while (true) {
-                    System.out.println("1-Change Username");
-                    System.out.println("2-Change Full Name");
-                    System.out.println("0-Finish Editing");
+                    Utilities.printGreed("1-Change Username");
+                    Utilities.printGreed("2-Change Full Name");
+                    Utilities.printGreed("0-Finish Editing");
                     System.out.print("Option: ");
                     String opt = sc.nextLine();
                     switch (opt) {
                         case "1":
-                            System.out.println("New Username: ");
+                            Utilities.printGreed("New Username: ");
                             String newUsername = Utilities.usernameReceiver();
                             student.setUsername(newUsername);
                             break;
                         case "2":
-                            System.out.println("New Firstname: ");
+                            Utilities.printGreed("New Firstname: ");
                             String newFirstName = sc.nextLine();
-                            System.out.println("New Lastname: ");
+                            Utilities.printGreed("New Lastname: ");
                             String newLastName = sc.nextLine();
                             student.setFirstname(newFirstName);
                             student.setLastname(newLastName);
@@ -148,12 +148,12 @@ public class EditController {
                             studentService.editProfile(student);
                             break label;
                         default:
-                            System.out.println("Wrong Option");
+                            Utilities.printGreed("Wrong Option");
                             break;
                     }
                 }
-            } else System.out.println("Wrong ID");
-        } else System.out.println("No Student Added yet.");
+            } else Utilities.printGreed("Wrong ID");
+        } else Utilities.printGreed("No Student Added yet.");
     }
 
     public void editCourse() {
@@ -165,43 +165,43 @@ public class EditController {
             if (courseToEdit != null) {
                 label:
                 while (true) {
-                    System.out.println("1-Change Name");
-                    System.out.println("2-Change Units");
-                    System.out.println("3-Change Professor");
-                    System.out.println("0-Finish Editing");
+                    Utilities.printGreed("1-Change Name");
+                    Utilities.printGreed("2-Change Units");
+                    Utilities.printGreed("3-Change Professor");
+                    Utilities.printGreed("0-Finish Editing");
                     System.out.print("Option: ");
                     String opt = sc.nextLine();
                     switch (opt) {
                         case "1":
-                            System.out.println("New Name: ");
+                            Utilities.printGreed("New Name: ");
                             String newName = sc.nextLine();
                             courseToEdit.setCourseName(newName);
                             break;
                         case "2":
-                            System.out.println("New Units: ");
+                            Utilities.printGreed("New Units: ");
                             Integer newUnit = Utilities.intReceiver();
                             courseToEdit.setUnits(newUnit);
                             break;
                         case "3":
                             List<Professor> professors = professorService.findAll();
                             professors.forEach(System.out::println);
-                            System.out.println("Enter professor ID to set for the course: ");
+                            Utilities.printGreed("Enter professor ID to set for the course: ");
                             Integer profId = Utilities.intReceiver();
                             Professor professor = professorService.find(profId);
                             if (professor != null) {
                                 if (courseToEdit.getProfessor() != null) {
                                     if (!courseToEdit.getProfessor().equals(professor)) {
                                         courseToEdit.setProfessor(professor);
-                                    } else System.out.println("It's the same professor");
+                                    } else Utilities.printGreed("It's the same professor");
                                 } else courseToEdit.setProfessor(professor);
-                            } else System.out.println("Wrong ID");
+                            } else Utilities.printGreed("Wrong ID");
                             break;
                         case "0":
                             courseService.editCourse(courseToEdit);
                             break label;
                     }
                 }
-            } else System.out.println("Wrong ID");
-        } else System.out.println("No Courses added yet");
+            } else Utilities.printGreed("Wrong ID");
+        } else Utilities.printGreed("No Courses added yet");
     }
 }

@@ -1,5 +1,6 @@
 package controllers.studentControllers;
 
+import controllers.Utilities;
 import models.users.Student;
 import org.hibernate.SessionFactory;
 import services.StudentService;
@@ -16,13 +17,13 @@ public class ChangePasswordController {
         this.student = student;
     }
     public void changePassword() {
-        System.out.println("Old Password: ");
+        Utilities.printGreed("Old Password: ");
         String oldPass = sc.nextLine();
-        System.out.println("New Password: ");
+        Utilities.printGreed("New Password: ");
         String newPass = sc.nextLine();
         if (student.getPassword().equals(oldPass)) {
             student.setPassword(newPass);
             studentService.editProfile(student);
-        } else System.out.println("Old Password was Wrong.");
+        } else Utilities.printGreed("Old Password was Wrong.");
     }
 }

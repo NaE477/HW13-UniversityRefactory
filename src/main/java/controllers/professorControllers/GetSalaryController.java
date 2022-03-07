@@ -23,9 +23,9 @@ public class GetSalaryController {
     }
 
     public void initiation() {
-        System.out.println("Which Term: ");
+        Utilities.printGreed("Which Term: ");
         Integer term = termReceiver();
-        System.out.println(getSalary(term));
+        Utilities.printGreed(getSalary(term).toString());
     }
 
     private Long getSalary(Integer term) {
@@ -55,7 +55,7 @@ public class GetSalaryController {
             Integer term = Utilities.intReceiver();
             if (term <= this.term.getTerm() && term > 0) {
                 return term;
-            } else System.out.println("Wrong term,Choose a term between: " + firstTerm.getTerm() + "-" + this.term.getTerm());
+            } else Utilities.printGreed("Wrong term,Choose a term between: " + firstTerm.getTerm() + "-" + this.term.getTerm());
         }
     }
 }
