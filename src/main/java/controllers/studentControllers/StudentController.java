@@ -21,21 +21,21 @@ public class StudentController {
     }
 
     public void entry() {
-        Utilities.printGreed("Welcome to Student Section," + student.getFirstname() + " " + student.getLastname() + "\nChoose an option:");
+        Utilities.printGreen("Welcome to Student Section," + student.getFirstname() + " " + student.getLastname() + "\nChoose an option:");
         label:
         while (true) {
-            Utilities.printGreed("1-View Profile");
-            Utilities.printGreed("2-View Presented Courses");
-            Utilities.printGreed("3-Pick Courses");
-            Utilities.printGreed("4-View Picked Courses");
-            Utilities.printGreed("5-Change Password");
-            Utilities.printGreed("0-Exit");
-            Utilities.printGreed("Option: ");
+            Utilities.printGreen("1-View Profile");
+            Utilities.printGreen("2-View Presented Courses");
+            Utilities.printGreen("3-Pick Courses");
+            Utilities.printGreen("4-View Picked Courses");
+            Utilities.printGreen("5-Change Password");
+            Utilities.printGreen("0-Exit");
+            Utilities.printGreen("Option: ");
             String opt = sc.nextLine();
 
             switch (opt) {
                 case "1":
-                    Utilities.printGreed(String.valueOf(student));
+                    Utilities.printGreen(String.valueOf(student));
                     break;
                 case "2":
                     viewCoursesController.viewCourses();
@@ -51,7 +51,7 @@ public class StudentController {
                 case "0":
                     break label;
                 default:
-                    Utilities.printGreed("Wrong Option.");
+                    Utilities.printGreen("Wrong Option.");
                     break;
             }
         }

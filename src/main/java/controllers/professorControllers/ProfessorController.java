@@ -21,20 +21,20 @@ public class ProfessorController {
     }
 
     public void entry() {
-        Utilities.printGreed("Welcome to Professor Section," + professor.getFirstname() + " " + professor.getLastname() + ".\nChoose an Option:");
+        Utilities.printGreen("Welcome to Professor Section," + professor.getFirstname() + " " + professor.getLastname() + ".\nChoose an Option:");
         label:
         while (true) {
-            Utilities.printGreed("1-View Profile");
-            Utilities.printGreed("2-Enter Grade");
-            Utilities.printGreed("3-View Paycheck");
-            Utilities.printGreed("4-Change Password");
-            Utilities.printGreed("0-Exit");
+            Utilities.printGreen("1-View Profile");
+            Utilities.printGreen("2-Enter Grade");
+            Utilities.printGreen("3-View Paycheck");
+            Utilities.printGreen("4-Change Password");
+            Utilities.printGreen("0-Exit");
             System.out.print("Option: ");
             String opt = sc.nextLine();
 
             switch (opt) {
                 case "1":
-                    Utilities.printGreed(String.valueOf(professor));
+                    Utilities.printGreen(String.valueOf(professor));
                     break;
                 case "2":
                     enterGradeController.enterGrade();

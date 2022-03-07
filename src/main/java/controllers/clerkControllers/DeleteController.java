@@ -2,7 +2,6 @@ package controllers.clerkControllers;
 
 import controllers.Utilities;
 import models.things.Course;
-import models.things.Term;
 import models.users.Clerk;
 import models.users.Professor;
 import models.users.Student;
@@ -30,44 +29,44 @@ public class DeleteController {
     public void deleteClerk() {
         List<Clerk> clerks = clerkService.findAll();
         clerks.forEach(System.out::println);
-        Utilities.printGreed("Enter clerk ID to delete: ");
+        Utilities.printGreen("Enter clerk ID to delete: ");
         Integer clerkToDeleteID = Utilities.intReceiver();
         Clerk clerkToDelete = clerkService.find(clerkToDeleteID);
         if (clerkToDelete != null) {
             clerkService.deleteClerk(clerkToDelete);
-        } else Utilities.printGreed("Wrong ID");
+        } else Utilities.printGreen("Wrong ID");
     }
 
     public void deleteProfessor() {
         List<Professor> professors = professorService.findAll();
         professors.forEach(System.out::println);
-        Utilities.printGreed("Professor ID: ");
+        Utilities.printGreen("Professor ID: ");
         Integer profToDeleteID = Utilities.intReceiver();
         Professor professorToDelete = professorService.find(profToDeleteID);
         if (professorToDelete != null) {
             professorService.deleteProfessor(professorToDelete);
-        } else Utilities.printGreed("Wrong ID");
+        } else Utilities.printGreen("Wrong ID");
     }
 
     public void deleteStudent() {
         List<Student> students = studentService.findAll();
         students.forEach(System.out::println);
-        Utilities.printGreed("Student ID: ");
+        Utilities.printGreen("Student ID: ");
         Integer studentToDeleteID = Utilities.intReceiver();
         Student studentToDelete = studentService.find(studentToDeleteID);
         if (studentToDelete != null) {
             studentService.delete(studentToDelete);
-        } else Utilities.printGreed("Wrong ID");
+        } else Utilities.printGreen("Wrong ID");
     }
 
     public void deleteCourse() {
         List<Course> courses = courseService.findAll();
         courses.forEach(System.out::println);
-        Utilities.printGreed("Course ID: ");
+        Utilities.printGreen("Course ID: ");
         Integer courseToDeleteID = Utilities.intReceiver();
         Course courseToDelete = courseService.find(courseToDeleteID);
         if (courseToDelete != null) {
             courseService.deleteCourse(courseToDelete);
-        } else Utilities.printGreed("Wrong ID");
+        } else Utilities.printGreen("Wrong ID");
     }
 }

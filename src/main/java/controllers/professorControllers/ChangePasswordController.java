@@ -18,13 +18,13 @@ public class ChangePasswordController {
     }
 
     public void changePassword() {
-        Utilities.printGreed("Old Password: ");
+        Utilities.printGreen("Old Password: ");
         String oldPass = sc.nextLine();
-        Utilities.printGreed("New Password: ");
+        Utilities.printGreen("New Password: ");
         String newPass = sc.nextLine();
         if (professor.getPassword().equals(oldPass)) {
             professor.setPassword(newPass);
             professorService.editProfile(professor);
-        } else Utilities.printGreed("Old Password was Wrong.");
+        } else Utilities.printGreen("Old Password was Wrong.");
     }
 }

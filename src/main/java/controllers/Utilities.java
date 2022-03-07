@@ -1,5 +1,6 @@
 package controllers;
 
+import models.users.User;
 import org.hibernate.SessionFactory;
 import services.ClerkService;
 import services.ProfessorService;
@@ -16,9 +17,19 @@ public class Utilities {
 
     public static String usernameReceiver() {
         while (true) {
-            System.out.println("Username: ");
+            printGreen("Username: ");
             String username = sc.nextLine();
-            if (usernameExists(username)) System.out.println("This username Already Exists! Try another one: ");
+            if (usernameExists(username)) printGreen("This username Already Exists! Try another one: ");
+            else return username;
+        }
+    }
+
+    public static <T extends User>  String usernameEditor(T t) {
+        while (true) {
+            printGreen("Username: ");
+            String username = sc.nextLine();
+            if (usernameExists(username)) printGreen("This username Already Exists! Try another one: ");
+            else if (t.getUsername().equals(username)) return username;
             else return username;
         }
     }
@@ -34,9 +45,9 @@ public class Utilities {
             try {
                 int output = Integer.parseInt(sc.nextLine());
                 if (output > 0) return output;
-                else System.out.println("Enter a number bigger than 0");
+                else printGreen("Enter a number bigger than 0");
             } catch (NumberFormatException e) {
-                System.out.println("Only numbers are allowed here.");
+                printGreen("Only numbers are allowed here.");
             }
         }
     }
@@ -46,14 +57,14 @@ public class Utilities {
             try {
                 double output = Double.parseDouble(sc.nextLine());
                 if (output > 0) return output;
-                else System.out.println("Enter a number bigger than 0");
+                else printGreen("Enter a number bigger than 0");
             } catch (NumberFormatException e) {
-                System.out.println("Only numbers are allowed here.");
+                printGreen("Only numbers are allowed here.");
             }
         }
     }
 
-    public static void printGreed(String input) {
-        System.out.println("         |" + "\u001b[32m" + input);
+    public static void printGreen(String input) {
+        System.out.println("         " + "\u001b[32m |" + input + "\u001b[0m");
     }
 }

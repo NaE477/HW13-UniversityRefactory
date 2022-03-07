@@ -17,13 +17,13 @@ public class ChangePasswordController {
         this.student = student;
     }
     public void changePassword() {
-        Utilities.printGreed("Old Password: ");
+        Utilities.printGreen("Old Password: ");
         String oldPass = sc.nextLine();
-        Utilities.printGreed("New Password: ");
+        Utilities.printGreen("New Password: ");
         String newPass = sc.nextLine();
         if (student.getPassword().equals(oldPass)) {
             student.setPassword(newPass);
             studentService.editProfile(student);
-        } else Utilities.printGreed("Old Password was Wrong.");
+        } else Utilities.printGreen("Old Password was Wrong.");
     }
 }

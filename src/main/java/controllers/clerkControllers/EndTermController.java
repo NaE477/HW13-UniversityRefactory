@@ -16,13 +16,13 @@ public class EndTermController {
     }
 
     public void endTerm() {
-        Utilities.printGreed("Sure?(Y/N)");
+        Utilities.printGreen("Sure?(Y/N)");
         String yOrN = sc.nextLine().toUpperCase(Locale.ROOT);
         if (yOrN.equals("Y")) {
             termService.endTerm();
-            Utilities.printGreed("Term Ended successfully.");
+            Utilities.printGreen("Term Ended successfully.");
         } else {
-            Utilities.printGreed("Cancelled.");
+            Utilities.printGreen("Cancelled.");
         }
     }
 }

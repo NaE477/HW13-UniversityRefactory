@@ -22,9 +22,9 @@ public class Entry {
     public static void main(String[] args) {
         initiateAdmin();
 
-        Utilities.printGreed("Welcome to University App.\n");
+        Utilities.printGreen("Welcome to University App.\n");
         while (true) {
-            Utilities.printGreed("Enter L/l to login or E/e to exit:");
+            Utilities.printGreen("Enter L/l to login or E/e to exit:");
             String opt = sc.nextLine().toUpperCase(Locale.ROOT);
 
             if (opt.equals("L")) login();
@@ -34,9 +34,9 @@ public class Entry {
     }
 
     private static void login() {
-        Utilities.printGreed("Username: ");
+        Utilities.printGreen("Username: ");
         String username = sc.nextLine();
-        Utilities.printGreed("Password: ");
+        Utilities.printGreen("Password: ");
         String password = sc.nextLine();
         User user = auth(username, password);
         if (user != null) {
@@ -50,7 +50,7 @@ public class Entry {
                 StudentController studentController = new StudentController(sessionFactory, (Student) user);
                 studentController.entry();
             }
-        } else Utilities.printGreed("Wrong Username/Password.");
+        } else Utilities.printGreen("Wrong Username/Password.");
     }
 
     private static User auth(String username, String password) {
@@ -73,7 +73,7 @@ public class Entry {
         ClerkService clerkService = new ClerkService(sessionFactory);
         if(clerkService.findAll().size() == 0) {
             clerkService.signUpClerk(new Clerk(0,"admin","admin","admin","admin"));
-            Utilities.printGreed("Admin user initiated due to first time login.");
+            Utilities.printGreen("Admin user initiated due to first time login.");
         }
     }
 }

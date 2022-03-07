@@ -28,24 +28,24 @@ public class ClerkController {
 
     public void entry() {
         initiateTerm();
-        Utilities.printGreed("Welcome to Clerk Section.\nChoose an option:");
+        Utilities.printGreen("Welcome to Clerk Section.\nChoose an option:");
         label:
         while (true) {
-            Utilities.printGreed("1-Add Clerk");
-            Utilities.printGreed("2-Add Professor");
-            Utilities.printGreed("3-Add Student");
-            Utilities.printGreed("4-Add Course");
-            Utilities.printGreed("5-Edit Clerk");
-            Utilities.printGreed("6-Edit Professor");
-            Utilities.printGreed("7-Edit Student");
-            Utilities.printGreed("8-Edit Course");
-            Utilities.printGreed("9-Delete Clerk");
-            Utilities.printGreed("10-Delete Professor");
-            Utilities.printGreed("11-Delete Student");
-            Utilities.printGreed("12-Delete Course");
-            Utilities.printGreed("13-View Pay Check");
-            Utilities.printGreed("14-End Term");
-            Utilities.printGreed("0-Exit");
+            Utilities.printGreen("1-Add Clerk");
+            Utilities.printGreen("2-Add Professor");
+            Utilities.printGreen("3-Add Student");
+            Utilities.printGreen("4-Add Course");
+            Utilities.printGreen("5-Edit Clerk");
+            Utilities.printGreen("6-Edit Professor");
+            Utilities.printGreen("7-Edit Student");
+            Utilities.printGreen("8-Edit Course");
+            Utilities.printGreen("9-Delete Clerk");
+            Utilities.printGreen("10-Delete Professor");
+            Utilities.printGreen("11-Delete Student");
+            Utilities.printGreen("12-Delete Course");
+            Utilities.printGreen("13-View Pay Check");
+            Utilities.printGreen("14-End Term");
+            Utilities.printGreen("0-Exit");
             System.out.print("Option: ");
             String opt = sc.nextLine();
 
@@ -87,7 +87,7 @@ public class ClerkController {
                     deleteController.deleteCourse();
                     break;
                 case "13":
-                    Utilities.printGreed(clerk.getSalary().toString());
+                    Utilities.printGreen(clerk.getSalary().toString());
                     break;
                 case "14":
                     endTermController.endTerm();
@@ -95,7 +95,7 @@ public class ClerkController {
                 case "0":
                     break label;
                 default:
-                    Utilities.printGreed("Wrong Option");
+                    Utilities.printGreen("Wrong Option");
                     break;
             }
         }
@@ -103,12 +103,12 @@ public class ClerkController {
 
     private void initiateTerm() {
         if(termService.findAll().size() == 0) {
-            Utilities.printGreed("Enter term prefix: ");
+            Utilities.printGreen("Enter term prefix: ");
             Integer termPrefix = Utilities.intReceiver();
             Integer firstTermNumber = termPrefix * 10 + 1;
             Term firstTerm = new Term(0,firstTermNumber,null);
             var term = termService.initiate(firstTerm);
-            Utilities.printGreed("First term initiated as: " + term.getTerm());
+            Utilities.printGreen("First term initiated as: " + term.getTerm());
         }
     }
 }

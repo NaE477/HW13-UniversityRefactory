@@ -38,8 +38,8 @@ public class ViewCoursesController {
         List<Grade> grades = gradeService.findAllByStudent(student);
         grades.forEach((grade) -> {
             if (grade.getGrade() != 0) {
-                Utilities.printGreed(grade.getCourse() + "\nGrade: " + grade);
-            } else Utilities.printGreed(grade.getCourse() + "\nProfessor haven't entered a grade for this course yet.");
+                Utilities.printGreen(grade.getCourse() + "\nGrade: " + grade);
+            } else Utilities.printGreen(grade.getCourse() + "\nProfessor haven't entered a grade for this course yet.");
         });
     }
 }
