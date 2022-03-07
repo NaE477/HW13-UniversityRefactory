@@ -40,14 +40,16 @@ class GradeServiceTest {
         studentService = new StudentService(sessionFactory);
         termService = new TermService(sessionFactory);
         professorService = new ProfessorService(sessionFactory);
+
+        assertNotNull(sessionFactory);
     }
 
     @BeforeEach
     void fillDependencies() {
-        student = new Student(0,"studentFname","studentLname","studentUsername","studentPassword");
-        //course dependency
-        Professor professor = new Professor(0, "pFirstname", "pLastname", "pUsername", "pPassword", ProfPosition.C);
-        //course dependency
+        student = new Student
+                (0,"studentFname","studentLname","studentUsername","studentPassword");
+        Professor professor = new Professor
+                (0, "pFirstname", "pLastname", "pUsername", "pPassword", ProfPosition.C);
         Term term = new Term(0, 141, null);
 
         course1 = new Course(0,3,"course", professor, term,null);
