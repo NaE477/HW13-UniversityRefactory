@@ -3,6 +3,7 @@ package controllers.studentControllers;
 import controllers.Utilities;
 import models.users.Student;
 import org.hibernate.SessionFactory;
+import services.StudentService;
 
 import java.util.*;
 
@@ -13,11 +14,12 @@ public class StudentController {
     private final ViewCoursesController viewCoursesController;
     private final Student student;
 
-    public StudentController(SessionFactory sessionFactory, Student student) {
+    public StudentController(SessionFactory sessionFactory, Integer studentId) {
+        StudentService studentService = new StudentService(sessionFactory);
+        student = studentService.find(studentId);
         pickCourseController = new PickCourseController(sessionFactory, student);
         changePasswordController = new ChangePasswordController(sessionFactory,student);
         viewCoursesController = new ViewCoursesController(sessionFactory,student);
-        this.student = student;
     }
 
     public void entry() {

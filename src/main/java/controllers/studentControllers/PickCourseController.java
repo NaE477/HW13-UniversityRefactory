@@ -13,7 +13,6 @@ import services.TermService;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class PickCourseController {
     private final CourseService courseService;
@@ -53,7 +52,14 @@ public class PickCourseController {
             if (!pickedCourses.contains(courseToPick)) {
                 if (canPickByThreshold(courseToPick)) {
                     Grade grade = gradeService.pickCourse(new Grade(0, student, courseToPick, null));
-                    if (grade != null) Utilities.printGreen(grade.getCourse().getCourseName() + " picked successfully");
+                    if (grade != null) {
+                        Utilities.printGreen(grade.getCourse().getCourseName() + " picked successfully");
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     else Utilities.printGreen("Something went wrong with database.");
                 } else Utilities.printGreen("You Can't Pick this course.Your unit threshold is filled.");
             } else Utilities.printGreen("Course Already Picked");

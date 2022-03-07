@@ -26,20 +26,18 @@ public class ViewCoursesController {
     }
 
     public void viewCourses() {
-        List<Course> courses = courseService.findAll();
-        Term currentTerm = termService.findCurrentTerm();
-        courses
-                .stream()
-                .filter(course -> course.getTerm().equals(currentTerm))
-                .forEach(System.out::println);
+        List<Course> courses = courseService.findAll(termService.findCurrentTerm());
+        courses.forEach(course -> Utilities.printGreen(course.toString()));
     }
 
     public void viewPickedCourses() {
         List<Grade> grades = gradeService.findAllByStudent(student);
+        if(grades.size() > 0)
         grades.forEach((grade) -> {
             if (grade.getGrade() != 0) {
                 Utilities.printGreen(grade.getCourse() + "\nGrade: " + grade);
             } else Utilities.printGreen(grade.getCourse() + "\nProfessor haven't entered a grade for this course yet.");
         });
+        else Utilities.printGreen("No courses picked yet");
     }
 }

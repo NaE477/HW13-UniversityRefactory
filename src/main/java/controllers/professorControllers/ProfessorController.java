@@ -3,6 +3,7 @@ package controllers.professorControllers;
 import controllers.Utilities;
 import models.users.Professor;
 import org.hibernate.SessionFactory;
+import services.ProfessorService;
 
 import java.util.Scanner;
 
@@ -13,11 +14,12 @@ public class ProfessorController {
     private final Professor professor;
     private final Scanner sc = new Scanner(System.in);
 
-    public ProfessorController(SessionFactory sessionFactory, Professor professor) {
+    public ProfessorController(SessionFactory sessionFactory, Integer professorId) {
+        ProfessorService professorService = new ProfessorService(sessionFactory);
+        professor = professorService.find(professorId);
         enterGradeController = new EnterGradeController(sessionFactory, professor);
         getSalaryController = new GetSalaryController(sessionFactory, professor);
         changePasswordController = new ChangePasswordController(sessionFactory, professor);
-        this.professor = professor;
     }
 
     public void entry() {

@@ -17,8 +17,9 @@ public class ClerkController {
     private final EndTermController endTermController;
     private final Scanner sc = new Scanner(System.in);
 
-    public ClerkController(SessionFactory sessionFactory, Clerk clerk) {
-        this.clerk = clerk;
+    public ClerkController(SessionFactory sessionFactory, Integer clerkId) {
+        ClerkService clerkService = new ClerkService(sessionFactory);
+        clerk = clerkService.find(clerkId);
         termService = new TermService(sessionFactory);
         signUpController = new SignUpController(sessionFactory);
         editController = new EditController(sessionFactory);

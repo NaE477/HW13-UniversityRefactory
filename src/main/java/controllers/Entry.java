@@ -41,13 +41,13 @@ public class Entry {
         User user = auth(username, password);
         if (user != null) {
             if (user instanceof Clerk) {
-                ClerkController clerkController = new ClerkController(sessionFactory, (Clerk) user);
+                ClerkController clerkController = new ClerkController(sessionFactory, user.getId());
                 clerkController.entry();
             } else if (user instanceof Professor) {
-                ProfessorController professorController = new ProfessorController(sessionFactory, (Professor) user);
+                ProfessorController professorController = new ProfessorController(sessionFactory, user.getId());
                 professorController.entry();
             } else if (user instanceof Student) {
-                StudentController studentController = new StudentController(sessionFactory, (Student) user);
+                StudentController studentController = new StudentController(sessionFactory, user.getId());
                 studentController.entry();
             }
         } else Utilities.printGreen("Wrong Username/Password.");
@@ -63,8 +63,7 @@ public class Entry {
         Student probableStudent = studentService.find(username);
 
         if (probableClerk != null && probableClerk.getPassword().equals(password)) return probableClerk;
-        else if (probableProfessor != null && probableProfessor.getPassword().equals(password))
-            return probableProfessor;
+        else if (probableProfessor != null && probableProfessor.getPassword().equals(password)) return probableProfessor;
         else if (probableStudent != null && probableStudent.getPassword().equals(password)) return probableStudent;
         else return null;
     }
