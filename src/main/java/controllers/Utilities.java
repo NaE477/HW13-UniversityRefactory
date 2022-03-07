@@ -28,8 +28,8 @@ public class Utilities {
         while (true) {
             printGreen("Username: ");
             String username = sc.nextLine();
-            if (usernameExists(username)) printGreen("This username Already Exists! Try another one: ");
-            else if (t.getUsername().equals(username)) return username;
+            if (t.getUsername().equals(username)) return username;
+            else if (usernameExists(username)) printGreen("This username Already Exists! Try another one: ");
             else return username;
         }
     }

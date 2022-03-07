@@ -40,12 +40,12 @@ public class EditController {
             while (true) {
                 Utilities.printGreen("1-Change username");
                 Utilities.printGreen("2-Change firstname/lastname");
+                Utilities.printGreen("3-Change password");
                 Utilities.printGreen("0-Finish Editing");
                 String opt = sc.nextLine();
                 switch (opt) {
                     case "1":
-                        Utilities.printGreen("New Username: ");
-                        String newUsername = Utilities.usernameReceiver();
+                        String newUsername = Utilities.usernameEditor(clerk);
                         clerk.setUsername(newUsername);
                         break;
                     case "2":
@@ -55,6 +55,11 @@ public class EditController {
                         String newLastName = sc.nextLine();
                         clerk.setFirstname(newFirstName);
                         clerk.setLastname(newLastName);
+                        break;
+                    case "3":
+                        Utilities.printGreen("New Password: ");
+                        String newPassword = sc.nextLine();
+                        clerk.setPassword(newPassword);
                         break;
                     case "0":
                         clerkService.editProfile(clerk);
@@ -85,8 +90,7 @@ public class EditController {
                     String opt = sc.nextLine();
                     switch (opt) {
                         case "1":
-                            Utilities.printGreen("New Username: ");
-                            String newUsername = Utilities.usernameReceiver();
+                            String newUsername = Utilities.usernameEditor(professor);
                             professor.setUsername(newUsername);
                             break;
                         case "2":
@@ -132,8 +136,7 @@ public class EditController {
                     String opt = sc.nextLine();
                     switch (opt) {
                         case "1":
-                            Utilities.printGreen("New Username: ");
-                            String newUsername = Utilities.usernameReceiver();
+                            String newUsername = Utilities.usernameEditor(student);
                             student.setUsername(newUsername);
                             break;
                         case "2":
@@ -160,6 +163,7 @@ public class EditController {
         List<Course> courses = courseService.findAll();
         if (courses.size() > 0) {
             courses.forEach(System.out::println);
+            Utilities.printGreen("Enter Course ID to edit: ");
             Integer courseToEditId = Utilities.intReceiver();
             Course courseToEdit = courseService.find(courseToEditId);
             if (courseToEdit != null) {
@@ -168,6 +172,7 @@ public class EditController {
                     Utilities.printGreen("1-Change Name");
                     Utilities.printGreen("2-Change Units");
                     Utilities.printGreen("3-Change Professor");
+                    Utilities.printGreen("4-Change Password");
                     Utilities.printGreen("0-Finish Editing");
                     System.out.print("Option: ");
                     String opt = sc.nextLine();

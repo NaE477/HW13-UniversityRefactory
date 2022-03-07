@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class Professor extends User {
-    @OneToMany(mappedBy = "professor")
+    @OneToMany(mappedBy = "professor",cascade = CascadeType.REMOVE)
     private Set<Course> courses;
     @Enumerated(EnumType.STRING)
     private ProfPosition profPosition;
