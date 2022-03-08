@@ -1,12 +1,6 @@
 package repos;
 
-import lombok.Getter;
-import models.users.User;
 import org.hibernate.SessionFactory;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.util.List;
 
 
 public abstract class BaseRepository<T> implements Repository<T>{
@@ -15,7 +9,6 @@ public abstract class BaseRepository<T> implements Repository<T>{
     public BaseRepository(SessionFactory sessionFactory){
         this.sessionFactory = sessionFactory;
     }
-
 
     @Override
     public T ins(T t) {

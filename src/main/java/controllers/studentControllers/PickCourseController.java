@@ -69,9 +69,9 @@ public class PickCourseController {
     }
 
     private Boolean canPickByThreshold(Course courseToPick) {
-        Set<Grade> finishedCoursesLastTerm = gradeUtils.finishedCourses(student);
+        Set<Grade> finishedCoursesLastTerm = gradeUtils.finishedCoursesLastTerm(student);
 
-        Set<Grade> unfinishedCoursesThisTerm = gradeUtils.unfinishedCourses(student);
+        Set<Grade> unfinishedCoursesThisTerm = gradeUtils.unfinishedCoursesThisTerm(student);
 
         Integer unitsPicked = gradeUtils.unitsPicked(unfinishedCoursesThisTerm);
 

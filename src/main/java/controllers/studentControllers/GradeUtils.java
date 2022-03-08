@@ -24,8 +24,7 @@ public class GradeUtils {
     }
 
 
-
-    public Set<Grade> finishedCourses(Student student) {
+    public Set<Grade> finishedCoursesLastTerm(Student student) {
         if (term.equals(termService.findFirstTerm())) return new HashSet<>();
         else return student
                 .getGrades()
@@ -35,7 +34,7 @@ public class GradeUtils {
                 .collect(Collectors.toSet());
     }
 
-    public Set<Grade> unfinishedCourses(Student student) {
+    public Set<Grade> unfinishedCoursesThisTerm(Student student) {
         return student
                 .getGrades()
                 .stream()
@@ -44,31 +43,31 @@ public class GradeUtils {
                 .collect(Collectors.toSet());
     }
 
-    public Set<Course> pickedCourses(List<Grade> reportCard){
+    public Set<Course> pickedCourses(List<Grade> reportCard) {
         return reportCard
                 .stream()
                 .map(Grade::getCourse)
                 .collect(Collectors.toSet());
     }
 
-    public Integer unitsPicked(Set<Grade> whateverSetOfGrades) {
+    public Integer unitsPicked(Set<Grade> anySetOfGrades) {
         AtomicReference<Integer> unitsPicked = new AtomicReference<>(0);
-        if (whateverSetOfGrades.size() > 0)
-            whateverSetOfGrades.stream().filter(grade -> grade.getCourse() != null).forEach(grade -> unitsPicked.updateAndGet(v -> v + (grade.getCourse().getUnits())));
+        if (anySetOfGrades.size() > 0)
+            anySetOfGrades.stream().filter(grade -> grade.getCourse() != null).forEach(grade -> unitsPicked.updateAndGet(v -> v + (grade.getCourse().getUnits())));
         return unitsPicked.get();
     }
 
-    public Double gradeSum(Set<Grade> whateverSetOfGrades) {
-        AtomicReference<Double> gradeSum = new AtomicReference<>(0.0);
-        if (whateverSetOfGrades.size() > 0)
-            whateverSetOfGrades.stream().filter(grade -> grade.getCourse() != null).forEach((grade) -> gradeSum.updateAndGet(v -> v + grade.getCourse().getUnits() * grade.getGrade()));
-        return gradeSum.get();
+    public Integer unitsPassed(Set<Grade> anySetOfGrades) {
+        AtomicReference<Integer> unitsPassed = new AtomicReference<>(0);
+        if (anySetOfGrades.size() > 0)
+            anySetOfGrades.stream().filter(grade -> grade.getCourse() != null).forEach((grade) -> unitsPassed.updateAndGet(v -> v + grade.getCourse().getUnits()));
+        return unitsPassed.get();
     }
 
-    public Integer unitsPassed(Set<Grade> whateverSetOfGrades) {
-        AtomicReference<Integer> unitsPassed = new AtomicReference<>(0);
-        if (whateverSetOfGrades.size() > 0)
-            whateverSetOfGrades.stream().filter(grade -> grade.getCourse() != null).forEach((grade) -> unitsPassed.updateAndGet(v -> v + grade.getCourse().getUnits()));
-        return unitsPassed.get();
+    public Double gradeSum(Set<Grade> anySetOfGrades) {
+        AtomicReference<Double> gradeSum = new AtomicReference<>(0.0);
+        if (anySetOfGrades.size() > 0)
+            anySetOfGrades.stream().filter(grade -> grade.getCourse() != null).forEach((grade) -> gradeSum.updateAndGet(v -> v + grade.getCourse().getUnits() * grade.getGrade()));
+        return gradeSum.get();
     }
 }

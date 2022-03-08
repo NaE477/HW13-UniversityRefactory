@@ -1,16 +1,10 @@
 package repos;
 
 import models.things.Course;
-import models.users.Clerk;
 import models.users.Student;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class StudentRep extends BaseRepository<Student> {
